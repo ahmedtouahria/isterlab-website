@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-p#ut&qt1+#sygjtvdfn_^#1kr^!846=l0%u_$hq*=i2loppid%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['isterlab.qateeb.com']
+ALLOWED_HOSTS = ['isterlab.qateeb.com','127.0.0.1']
 
 
 # Application definition

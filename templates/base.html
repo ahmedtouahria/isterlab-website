@@ -7,28 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Bootstrap Icon CSS -->
-    <link href="assets/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap-icons.css' %}" rel="stylesheet">
     <!-- Fontawesome all CSS -->
-    <link href="assets/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/all.min.css' %}" rel="stylesheet">
 
     <!-- Fontawesome CSS -->
-    <link href="assets/css/fontawesome.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/fontawesome.min.css' %}" rel="stylesheet">
     <!-- Swiper slider CSS -->
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
 
+    <link rel="shortcut icon" href="{% static "assets/img/icon.ico" %}" type="image/x-icon">
     <!-- Animate CSS -->
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/jquery.fancybox.min.css' %}">
     <!-- BoxIcon  CSS -->
-    <link href="assets/css/boxicons.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/boxicons.min.css' %}" rel="stylesheet">
     <!--  Style CSS  -->
-        <link rel="stylesheet" href="assets/css/preloader.css">
-    <link rel="stylesheet" href="assets/css/style2.css">
+        <link rel="stylesheet" href="{% static 'assets/css/preloader.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style2.css' %}">
     <!-- Title -->
-    <title>Softconic- Software Agency and creative IT solution HTML Template</title>
-    <link rel="icon" href="assets/img/sm-logo.svg" type="image/gif" sizes="20x20">
+    <title>Isterlab- Software Agency and creative IT solution HTML Template</title>
+    <link rel="icon" href="{% static 'assets/img/sm-logo.svg' %}" type="image/gif" sizes="20x20">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 
 <body class="home-dark  tt-magic-cursor">
@@ -44,32 +47,30 @@
     {% include "partes/footer.html" %}
 
 
-    <!--  Main jQuery  -->
-    <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.6.0.min.js"></script>
     <!-- Popper and Bootstrap JS -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
     <!-- Swiper slider JS -->
-    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
     <!-- Waypoints JS -->
-    <script src="assets/js/waypoints.min.js"></script>
+    <script src="{% static 'assets/js/waypoints.min.js' %}"></script>
     <!-- Counterup JS -->
-    <script src="assets/js/jquery.counterup.min.js"></script>
+    <script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
     <!-- Isotope  JS -->
-    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="{% static 'assets/js/isotope.pkgd.min.js' %}"></script>
     <!-- Fancybox  JS -->
-    <script src="assets/js/jquery.fancybox.min.js"></script>
+    <script src="{% static 'assets/js/jquery.fancybox.min.js' %}"></script>
     <!-- GSAP  JS -->
-     <script src="assets/js/gsap.min.js"></script>
-    <script src="assets/js/simpleParallax.min.js"></script>
-    <script src="assets/js/TweenMax.min.js"></script>
+     <script src="{% static 'assets/js/gsap.min.js' %}"></script>
+    <script src="{% static 'assets/js/simpleParallax.min.js' %}"></script>
+    <script src="{% static 'assets/js/TweenMax.min.js' %}"></script>
     <!-- Marquee  JS -->
-    <script src="assets/js/jquery.marquee.min.js"></script>
+    <script src="{% static 'assets/js/jquery.marquee.min.js' %}"></script>
     <!-- Wow JS -->
-    <script src="assets/js/wow.min.js"></script>
+    <script src="{% static 'assets/js/wow.min.js' %}"></script>
     <!-- Custom JS -->
-    <script src="assets/js/preloader.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="{% static 'assets/js/preloader.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
     <script>
         $(".marquee_text").marquee({
         direction: "left",

@@ -1,4 +1,6 @@
-    <!-- Start About Section -->
+{% load static %}
+ 
+ <!-- Start About Section -->
     <div class="home3-about-section sec-mar">
         <div class="container-fluid">
             <div class="row g-lg-4 gy-5">
@@ -9,7 +11,7 @@
                     </div>
                     <div class="about-left">
                         <div class="about-img  wow animate fadeInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-                            <img class="img-fluid magnetic-item" src="assets/img/home-3/home3-about-1.png" alt="">
+                            <img class="img-fluid magnetic-item" src="{% static 'assets/img/home-3/home3-about-1.png' %}" alt="">
                         </div>
                         <div class="about-content wow animate fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
                             <h2>Unlock the potential of your business.</h2>
@@ -31,11 +33,11 @@
                 <div class="col-lg-3">
                     <div class="about-right">
                         <div class="about-img wow animate fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                            <img class="img-fluid magnetic-item" src="assets/img/home-3/home3-about-2.png" alt="">
+                            <img class="img-fluid magnetic-item" src="{% static 'assets/img/home-3/home3-about-2.png' %}" alt="">
                         </div>
                         <div class="about-exprience d-flex align-items-center justify-content-center wow animate fadeInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
                             <div class="exp-text">
-                                <img src="assets/img/home-3/rotate-text.png" alt="">
+                                <img src="{% static 'assets/img/home-3/rotate-text.png' %}" alt="">
                             </div>
                             <div class="years">
                                 <h2>10<br><span>Years</span></h2>

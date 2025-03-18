@@ -2,88 +2,31 @@
     <!-- Start header section -->
     <header class="header-area2 style-2">
         <div class="header-logo">
-            <a href="index.html"><img alt="image" class="img-fluid" src="{% static 'assets/img/icon.ico' %}" width="100"></a>
+            <a href="{% url 'home' %}"><img alt="image" class="img-fluid" src="{% static 'assets/img/icon.ico' %}" width="100"></a>
         </div>
         <div class="main-menu">
             <div class="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
                 <div class="mobile-logo-wrap">
-                    <a href="index.html"><img alt="image" src="{% static 'assets/img/icon.ico' %}" width="100"></a>
+                    <a href="{% url 'home' %}"><img alt="image" src="{% static 'assets/img/icon.ico' %}" width="100"></a>
                 </div>
             </div>
             <ul class="menu-list">
-                <li class="menu-item-has-children active">
-                    <a href="index2.html#" class="drop-down">Home</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="index.html">Home 01</a></li>
-                        <li><a href="index2.html">Home 02</a></li>
-                        <li><a href="index3.html">Home 03</a></li>
-                        <li><a href="index4.html">Home 04</a></li>
-                    </ul>
+                <li class="menu-item active">
+                    <a  href="{% url 'home' %}">Home</a></i>
+ 
                 </li>
-                <li><a href="about.html">About</a></li>
-                <li class="menu-item-has-children">
-                    <a href="index2.html#" class="drop-down">Service</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="service.html">Service 01</a></li>
-                        <li><a href="service2.html">Service 02</a></li>
-                        <li><a href="service3.html">Service 03</a></li>
-                        <li><a href="service4.html">Service 04</a></li>
-                        <li><a href="service-details.html">Service Details</a></li>
-                    </ul>
+                
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li class="menu-item">
+                    <a  href="{% url 'services' %}" class="drop-down">Services</a>
                 </li>
-                <li class="menu-item-has-children">
-                    <a href="index2.html#" class="drop-down">Project</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="project.html">Project</a></li>
-                        <li><a href="project-masonary.html">Project Masonry</a></li>
-                     <li><a href="project-details.html">Project Details</a></li>
-                    </ul>
+                <li class="menu-item">
+                    <a  href="{% url 'projects' %}" class="drop-down">Projects</a>
                 </li>
-                <li class="menu-item-has-children">
-                    <a href="index2.html#" class="drop-down">Pages</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="team1.html">Team</a>
-                            <i class="d-lg-flex d-none bi bi-chevron-right dropdown-icon"></i>
-                            <i class="d-lg-none d-flex bi bi-plus dropdown-icon"></i>
-                            <ul class="sub-menu">
-                                <li><a href="team1.html">Team 01</a></li>
-                                <li><a href="team2.html">Team 02</a></li>
-                                <li><a href="team3.html">Team 03</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                           <a href="pricing.html">Pricing</a>
-                            <i class="d-lg-flex d-none bi bi-chevron-right dropdown-icon"></i>
-                            <i class="d-lg-none d-flex bi bi-plus dropdown-icon"></i>
-                            <ul class="sub-menu">
-                                <li><a href="pricing.html">Pricing 01</a></li>
-                                <li><a href="pricing2.html">Pricing 02</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">FAQs</a></li>
-                        <li><a href="error.html">Error 404</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children">
-                    <a href="index2.html#" class="drop-down">Case Study</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="case-study.html">Case study 01</a></li>
-                        <li><a href="case-study2.html">Case study 02</a></li>
-                        <li><a href="case-study-standard.html">Case study standard</a></li>
-                        <li><a href="case-study-details.html">Case study Details</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children">
-                    <a href="index2.html#" class="drop-down">Blog</a><i class="bi bi-plus dropdown-icon"></i>
-                    <ul class="sub-menu">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="blog-standard.html">Blog standard</a></li>
-                        <li><a href="blog-sidebar.html">Blog Sidebar</a></li>
-                        <li><a href="blog-masonary.html">Blog Masonary</a></li>
-                        <li><a href="blog-details.html">Blog Details</a></li>
-                    </ul>
+
+                <li class="menu-item">
+                    <a  href="{% url 'home' %}" class="drop-down">Blogs</a>
+    
                 </li>
 
             </ul>

@@ -22,3 +22,13 @@ def services(request):
 
 def project(request):
     return render(request, 'pages/projects.html')
+
+
+def why_us(request):
+
+    return render(request, 'pages/why_us.html')
+
+
+def contact(request):
+
+    return render(request, 'pages/contact.html')

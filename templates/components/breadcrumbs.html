@@ -1,30 +1,22 @@
 {% load static %}
    
-   <!-- Start breadcrumbs section -->
-    <section class="breadcrumbs">
-        <div class="breadcrumb-sm-images">
-            <div class="inner-banner-1 magnetic-item">
-                <img loading="lazy"src="{% static 'assets/img/inner-pages/inner-banner-1.png' %}" alt="">
-            </div>
-            <div class="inner-banner-2 magnetic-item">
-                <img loading="lazy"src="{% static 'assets/img/inner-pages/inner-banner-2.png' %}" alt="">
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumb-wrapper">
-                        <div class="breadcrumb-cnt">
-                            <span>{{section}}</span>
-                            <h1>"{{section_description}}"</h1>
-                            <div class="breadcrumb-list">
-                                <a href="index.html">Home</a><img loading="lazy"src="{% static 'assets/img/inner-pages/breadcrumb-arrow.svg' %}" alt=""> {{section}}
-                            </div>
-                           
-                        </div>
-                    </div>
+ <!-- breadcrumb-area start -->
+ <div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_box text-center">
+                    <h2 class="breadcrumb-title">{{section}}</h2>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">{{section}}</li>
+                    </ul>
+                    <!-- breadcrumb-list end -->
                 </div>
             </div>
         </div>
-    </section>
-    <!-- End breadcrumbs section -->
+    </div>
+</div>
+<!-- breadcrumb-area end -->
+

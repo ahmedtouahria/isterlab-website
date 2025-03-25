@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% load static %}
-
+{% block breadcrumbs %}
+{% include "components/breadcrumbs.html" with section=' Contact us' %}
+{% endblock breadcrumbs %}
 {% block content %}
 
 <div class="site-wrapper-reveal">

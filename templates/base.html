@@ -24,6 +24,8 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 
+    {% block styles %}
+    {% endblock styles %}
 </head>
 
 <body>
@@ -332,6 +334,9 @@
     <!-- Main JS -->
     <script src="{% static 'assets/js/main.js' %}"></script>
 
+    {% block js %}
+    
+    {% endblock js %}
 </body>
 
 </html>

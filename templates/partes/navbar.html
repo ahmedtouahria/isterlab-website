@@ -35,10 +35,11 @@
                                                                 <a href="{% url "about" %}"><span>About us</span></a>
                                                             </li>
                                                             <li><a href="{% url "contact" %}"><span>Contact us</span></a></li>
-                                                            <li><a href="leadership.html"><span>Leadership</span></a></li>
                                                             <li><a href="{% url "why_us" %}"><span>Why choose us</span></a></li>
                                                             <li><a href="faqs.html"><span>FAQs</span></a></li>
                                                             <li><a href="careers.html"><span>Careers</span></a></li>
+                                                            <li><a href="careers.html"><span>Blogs</span></a></li>
+
                                                         </ul>
                                                     </li>
                                                     <li class="has-children has-children--multilevel-submenu">
@@ -52,7 +53,7 @@
                                                         </ul>
                                                     </li>
                                                     <li class="">
-                                                        <a href="index-modern-it-company.html#"><span>Why choose us</span></a>
+                                                        <a href="{% url "why_us" %}"><span>Why choose us</span></a>
                                               
                                                     </li>
                                                     <li class="has-children has-children--multilevel-submenu">
@@ -64,23 +65,9 @@
                                                             <li><a href="single-smart-vision.html"><span>Cable management</span></a></li>
                                                         </ul>
                                                     </li>
-                                                    <li class="has-children has-children--multilevel-submenu">
-                                                        <a href="blog-list-large-image.html"><span>Blog</span></a>
-                                                        <!-- multilevel submenu -->
-                                                        <ul class="submenu">
-                                                            <li><a href="blog-list-large-image.html"><span>List Large Image</span></a></li>
-                                                            <li><a href="blog-list-left-large-image.html"><span>Left Large Image</span></a></li>
-                                                            <li><a href="blog-grid-classic.html"><span>Grid Classic</span></a></li>
-                                                            <li><a href="blog-grid-masonry.html"><span>Grid Masonry</span></a></li>
-                                                            <li class="has-children">
-                                                                <a href="blog-post-layout-one.html"><span>Single Layouts</span></a>
-                                                                <ul class="submenu">
-                                                                    <li><a href="blog-post-layout-one.html"><span>Left Sidebar</span></a></li>
-                                                                    <li><a href="blog-post-right-sidebar.html"><span>Right Sidebar</span></a></li>
-                                                                    <li><a href="blog-post-no-sidebar.html"><span>No Sidebar</span></a></li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
+                                                    <li class="">
+                                                        <a href="{% url "coverages" %}"><span>Coverage</span></a>
+                                                       
                                                     </li>
                                                 </ul>
                                             </nav>
@@ -88,7 +75,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <!-- header right box -->

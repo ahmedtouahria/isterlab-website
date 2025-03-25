@@ -32,3 +32,8 @@ def why_us(request):
 def contact(request):
 
     return render(request, 'pages/contact.html')
+
+
+def coverages(request):
+
+    return render(request, 'pages/coverages.html')

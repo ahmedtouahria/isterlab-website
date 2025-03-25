@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block styles %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+{% endblock styles %}
+{% block breadcrumbs %}
+{% include "components/breadcrumbs.html" with section=' Coverage' %}
+{% endblock breadcrumbs %}
+{% block content %}
+<div id="main-wrapper">
+    <div class="site-wrapper-reveal">
+        <div class="full-wrap-map section-space--pt_100">
+            <div class="section-title  text-center">
+                <h3 class="section-space--mb_40">Default Style</h3>
+            </div>
+
+            <div class="google-map">
+                <div id="map" class="embed-responsive-item googleMap-3" data-lat="40.730610" data-Long="-73.935242"></div>
+            </div>
+        </div>
+
+
+
+
+
+        <!--========== Call to Action Area Start ============-->
+        <div class="cta-image-area_one section-space--ptb_80 cta-bg-image_one">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="cta-content md-text-center">
+                            <h3 class="heading text-white">Assess your business potentials and find opportunities <span class="text-color-secondary">for bigger success</span></h3>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="cta-button-group--one text-center">
+                            <a href="element-google-map.html#" class="btn btn--white btn-one"><span class="btn-icon me-2"><i class="far fa-comment-alt"></i></span> Let's talk</a>
+                            <a href="element-google-map.html#" class="btn btn--secondary  btn-two"><span class="btn-icon me-2"><i class="fas fa-info-circle"></i></span> Get info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--========== Call to Action Area End ============-->
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+    var map = L.map('map').setView([20, 0], 3);
+
+    // Use a tile layer without country borders
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+
+    // Custom locations (Markers)
+    var locations = [
+    { name: "New York, USA", lat: 40.7128, lng: -74.0060 },
+    { name: "London, UK", lat: 51.5074, lng: -0.1278 },
+    { name: "Tokyo, Japan", lat: 35.6895, lng: 139.6917 },
+    { name: "Morocco", lat: 30.5731, lng: -7.0000 },
+    { name: "France, Paris", lat: 48.8575, lng: 2.3514 },
+    { name: "Kuwait, Kuwait", lat: 29.3117, lng: 47.4818 },
+    { name: "Riyadh, Saudi Arabia", lat: 24.7136, lng: 46.6753 },
+    { name: "Baku, Azerbaijan", lat: 40.4093, lng: 49.8671 },
+    { name: "Doha, Qatar", lat: 25.2769, lng: 51.5200 }
+    ];
+
+    // Add markers for each location
+    locations.forEach(function(location) {
+        L.marker([location.lat, location.lng])
+            .addTo(map)
+            .bindPopup(`<b>${location.name}</b>`) // Click marker to see location name
+            .openPopup();
+    });
+
+</script>
+{% endblock js %}

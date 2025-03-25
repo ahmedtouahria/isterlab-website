@@ -36,12 +36,12 @@
                                                             </li>
                                                             <li><a href="{% url "contact" %}"><span>Contact us</span></a></li>
                                                             <li><a href="{% url "why_us" %}"><span>Why choose us</span></a></li>
-                                                            <li><a href="faqs.html"><span>FAQs</span></a></li>
+                                                            <li><a href="{% url "faq" %}"><span>FAQs</span></a></li>
                                                             <li><a href="careers.html"><span>Careers</span></a></li>
                                                             <li><a href="careers.html"><span>Blogs</span></a></li>
 
                                                         </ul>
-                                                    </li>
+                                                    </li> 
                                                     <li class="has-children has-children--multilevel-submenu">
                                                         <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
                                                         <ul class="submenu">
@@ -60,9 +60,13 @@
                                                         <a href="index-modern-it-company.html#"><span>Services</span></a>
                                                         <!-- multilevel submenu -->
                                                         <ul class="submenu">
-                                                            <li><a href="case-studies.html"><span>Service desk</span></a></li>
-                                                            <li><a href="case-studies-02.html"><span>Quick support</span></a></li>
-                                                            <li><a href="single-smart-vision.html"><span>Cable management</span></a></li>
+                                                            <li><a href="{% url "service_details" %}"><span>Service desk</span></a></li>
+                                                            <li><a href="{% url "service_details" %}"><span>Quick support</span></a></li>
+                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                                            <li class="text-color-primary"><a class="text-color-primary" href="{% url "services" %}"><span class="text-color-primary">View all</span></a></li>
+
                                                         </ul>
                                                     </li>
                                                     <li class="">

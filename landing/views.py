@@ -37,3 +37,14 @@ def contact(request):
 def coverages(request):
 
     return render(request, 'pages/coverages.html')
+
+
+
+def service_details(request):
+
+    return render(request, 'pages/service_details.html')
+
+
+def faq(request):
+
+    return render(request, 'pages/faq.html')

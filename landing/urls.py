@@ -8,8 +8,12 @@ urlpatterns = [
     path("projects/",project,name="projects"),
     path("why_choose_isterlab/",why_us,name="why_us"),
     path("contact/",contact,name="contact"),
+    path("become-a-partner/",become_a_partner,name="become_a_partner"),
+
     path("coverages/",coverages,name="coverages"),
     path("service_details/",service_details,name="service_details"),
+    path("solution_details/",solution_details,name="solution_details"),
+
     path("faq/",faq,name="faq"),
 
 

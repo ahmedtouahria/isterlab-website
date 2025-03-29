@@ -44,7 +44,15 @@ def service_details(request):
 
     return render(request, 'pages/service_details.html')
 
+def solution_details(request):
+
+    return render(request, 'pages/solution_details.html')
 
 def faq(request):
 
     return render(request, 'pages/faq.html')
+
+
+def become_a_partner(request):
+
+    return render(request, 'pages/become_a_partner.html')

@@ -21,14 +21,23 @@ ALLOWED_HOSTS = ['isterlab.qateeb.com','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.import_export",  # optional, if django-import-export package is used
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "django.contrib.admin",  # required
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'constance',
     'landing'
 ]
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'constance.context_processors.config'
             ],
         },
     },
@@ -119,3 +129,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CONSTANCE_ADDITIONAL_FIELDS = {
+    'choices_select': ['django.forms.fields.ChoiceField', {
+        'widget': 'django.forms.Select',
+        'choices': ((None, "-----"), ("stripe", "Stripe"), ("moyasar", "Moyasar"),("adyent","Adyent"))
+    }
+    ],
+    'image_field': ['django.forms.ImageField', {'required': False}],  # Make it optional
+
+}
+
+CONSTANCE_CONFIG={
+    'WEBSITE_NAME': ("Isterlab", 'WEBSITE NAME'),
+    'LOGO': ("",'','image_field'),
+    'DESCRIPTION': ("Team up with the best collaboration from the right expertises.", 'WEBSITE DESCRIPTION'),
+    'PRIMARY_PHONE': ('', 'PRIMARY_PHONE'),
+    'SECONDARY_PHONE': ('', 'SECONDARY_PHONE'),
+    'BASE_ADDRESS': ("", 'BASE_ADDRESS'),
+    'CONTACT_EMAIL': ("", 'CONTACT_EMAIL'),
+    'NUMBER_OF_CLIENTS': ('0', 'NUMBER_OF_CLIENTS'),
+    'NUMBER_OF_PROJECTS': ('0', 'NUMBER_OF_PROJECTS'),
+    'NUMBER_OF_YEARS': ('10', 'NUMBER_OF_YEARS'),
+    'FACEBOOK_PAGE': ('', 'Facebook Page'),
+    'X_PAGE': ('', 'X Page'),
+    'LINKEDIN_PAGE': ('', 'LinkedIn Page'),
+}

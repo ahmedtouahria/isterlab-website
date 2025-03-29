@@ -11,7 +11,7 @@
                         <!-- brand logo -->
                         <div class="header__logo">
                             <a href="{% url "home" %}">
-                                <img loading="lazy"src="{% static 'assets/images/logo/icon.ico' %}" aria-label="Isterlab Logo" width="160" height="48" class="img-fluid" alt="">
+                                <img loading="lazy"src="{% static 'assets/images/logo/icon.ico' %}" aria-label="{{config.WEBSITE_NAME}} Logo" width="160" height="48" class="img-fluid" alt="">
                             </a>
                         </div>
 
@@ -37,6 +37,8 @@
                                                             <li><a href="{% url "contact" %}"><span>Contact us</span></a></li>
                                                             <li><a href="{% url "why_us" %}"><span>Why choose us</span></a></li>
                                                             <li><a href="{% url "faq" %}"><span>FAQs</span></a></li>
+                                                            <li><a href="{% url "become_a_partner" %}"><span>Become a partner</span></a></li>
+
                                                             <li><a href="careers.html"><span>Careers</span></a></li>
                                                             <li><a href="careers.html"><span>Blogs</span></a></li>
 
@@ -45,11 +47,11 @@
                                                     <li class="has-children has-children--multilevel-submenu">
                                                         <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
                                                         <ul class="submenu">
-                                                            <li><a href="it-services.html"><span>IT Services</span></a></li>
-                                                            <li><a href="managed-it-service.html"><span>Managed IT Services</span></a></li>
-                                                            <li><a href="industries.html"><span>Industries</span></a></li>
-                                                            <li><a href="business-solution.html"><span>Business solution</span></a></li>
-                                                            <li><a href="it-services-details.html"><span>IT Services Details</span></a></li>
+                                                            <li><a href="{% url "solution_details" %}"><span>IT Services</span></a></li>
+                                                            <li><a href="{% url "solution_details" %}"><span>Managed IT Services</span></a></li>
+                                                            <li><a href="{% url "solution_details" %}"><span>Industries</span></a></li>
+                                                            <li><a href="{% url "solution_details" %}"><span>Business solution</span></a></li>
+                                                            <li><a href="{% url "solution_details" %}"><span>IT Services Details</span></a></li>
                                                         </ul>
                                                     </li>
                                                     <li class="">
@@ -117,3 +119,86 @@
     <!-- Header Bottom Wrap End -->
 
 </div>
+
+    <!--====================  mobile menu overlay ====================-->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <div class="mobile-menu-overlay__inner">
+            <div class="mobile-menu-overlay__header">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-8">
+                            <!-- logo -->
+                            <div class="logo">
+                                <a href="index.html">
+                                    <img loading="lazy"src="{% static 'assets/images/logo/icon.ico' %}" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-4">
+                            <!-- mobile menu content -->
+                            <div class="mobile-menu-content text-end">
+                                <span class="mobile-navigation-close-icon" id="mobile-menu-close-trigger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-overlay__body">
+                <nav class="offcanvas-navigation">
+                    <ul>
+                        <li class="">
+                            <a href="{% url "home" %}"><span>Home</span></a>
+                        </li>
+                        <li class="has-children has-children--multilevel-submenu">
+                            <a href="index-modern-it-company.html#"><span>Company</span></a>
+                            <ul class="sub-menu">
+                                <li class="">
+                                    <a href="{% url "about" %}"><span>About us</span></a>
+                                </li>
+                                <li><a href="{% url "contact" %}"><span>Contact us</span></a></li>
+                                <li><a href="{% url "why_us" %}"><span>Why choose us</span></a></li>
+                                <li><a href="{% url "faq" %}"><span>FAQs</span></a></li>
+                                <li><a href="{% url "become_a_partner" %}"><span>Become a partner</span></a></li>
+
+                                <li><a href="careers.html"><span>Careers</span></a></li>
+                                <li><a href="careers.html"><span>Blogs</span></a></li>
+
+                            </ul>
+                        </li> 
+                        <li class="has-children has-children--multilevel-submenu">
+                            <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
+                            <ul class="sub-menu">
+                                <li><a href="{% url "solution_details" %}"><span>IT Services</span></a></li>
+                                <li><a href="{% url "solution_details" %}"><span>Managed IT Services</span></a></li>
+                                <li><a href="{% url "solution_details" %}"><span>Industries</span></a></li>
+                                <li><a href="{% url "solution_details" %}"><span>Business solution</span></a></li>
+                                <li><a href="{% url "solution_details" %}"><span>IT Services Details</span></a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="{% url "why_us" %}"><span>Why choose us</span></a>
+                  
+                        </li>
+                        <li class="has-children has-children--multilevel-submenu">
+                            <a href="index-modern-it-company.html#"><span>Services</span></a>
+                            <!-- multilevel submenu -->
+                            <ul class="sub-menu">
+                                <li><a href="{% url "service_details" %}"><span>Service desk</span></a></li>
+                                <li><a href="{% url "service_details" %}"><span>Quick support</span></a></li>
+                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                <li class="text-color-primary"><a class="text-color-primary" href="{% url "services" %}"><span class="text-color-primary">View all</span></a></li>
+
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="{% url "coverages" %}"><span>Coverage</span></a>
+                           
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!--====================  End of mobile menu overlay  ====================-->

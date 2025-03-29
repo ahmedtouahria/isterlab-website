@@ -15,8 +15,8 @@
             <div class="row">
                 <div class="col-lg-8 m-auto">
                     <div class="about-banner-content text-center">
-                        <h1 class="mb-15 text-white">About Isterlab</h1>
-                        <h5 class="font-weight--normal text-white">Isterlab specializes in technological and IT-related services such as product engineering, warranty management, building cloud, infrastructure, network, etc. </h5>
+                        <h1 class="mb-15 text-white">About {{config.WEBSITE_NAME}}</h1>
+                        <h5 class="font-weight--normal text-white">{{config.WEBSITE_NAME}} specializes in technological and IT-related services such as product engineering, warranty management, building cloud, infrastructure, network, etc. </h5>
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
 
                     <div class="col-lg-5 offset-lg-1">
                         <div class="cybersecurity-about-text">
-                            <div class="text">Isterlab specializes in technological and IT-related services such as product engineering, warranty management, building cloud, infrastructure, network, etc. We put a strong focus on the needs of your business to figure out solutions that best fits your demand and nail it.</div>
+                            <div class="text">{{config.WEBSITE_NAME}} specializes in technological and IT-related services such as product engineering, warranty management, building cloud, infrastructure, network, etc. We put a strong focus on the needs of your business to figure out solutions that best fits your demand and nail it.</div>
                             <div class="button-text">
                                 <a href="about-us-01.html#" class="btn-text">
                                     Discover now
@@ -102,7 +102,7 @@
                                             <h5 class="heading">Become our partners?</h5>
                                             <div class="text">Our preventive and progressive approach will help you take the lead while addressing possible threats in managing data.
                                             </div>
-                                            <a href="about-us-01.html#" class="box-images-arrow">
+                                            <a href="{% url "become_a_partner" %}" class="box-images-arrow">
                                                 <span class="button-text">Discover now</span>
                                                 <i class="fas fa-arrow-right"></i>
                                             </a>
@@ -217,7 +217,7 @@
                 <div class="col-lg-12">
                     <div class="section-title-wrap text-center section-space--mb_40">
                         <h6 class="section-sub-title mb-20">Testimonials</h6>
-                        <h3 class="heading">What do people praise about <span class="text-color-primary"> Isterlab?</span></h3>
+                        <h3 class="heading">What do people praise about <span class="text-color-primary"> {{config.WEBSITE_NAME}}?</span></h3>
                     </div>
                     <div class="testimonial-slider">
                         <div class="swiper-container testimonial-slider__container">
@@ -245,7 +245,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @Isterlab is one of the most impressive to me.</div>
+                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @{{config.WEBSITE_NAME}} is one of the most impressive to me.</div>
 
                                     </div>
                                 </div>
@@ -272,7 +272,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @Isterlab is one of the most impressive to me.</div>
+                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @{{config.WEBSITE_NAME}} is one of the most impressive to me.</div>
 
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @Isterlab is one of the most impressive to me.</div>
+                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @{{config.WEBSITE_NAME}} is one of the most impressive to me.</div>
 
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @Isterlab is one of the most impressive to me.</div>
+                                        <div class="testimonial-slider__text">I’ve been working with over 35 IT companies on more than 200 projects of our company, but @{{config.WEBSITE_NAME}} is one of the most impressive to me.</div>
 
                                     </div>
                                 </div>

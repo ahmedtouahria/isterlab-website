@@ -11,8 +11,8 @@ urlpatterns = [
     path("become-a-partner/",become_a_partner,name="become_a_partner"),
 
     path("coverages/",coverages,name="coverages"),
-    path("service_details/",service_details,name="service_details"),
-    path("solution_details/",solution_details,name="solution_details"),
+    path("service_details/<str:name>/",service_details,name="service_details"),
+    path("solutions/<str:name>/",solution_details,name="solution_details"),
 
     path("faq/",faq,name="faq"),
 

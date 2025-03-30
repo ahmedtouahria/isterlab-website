@@ -3,19 +3,19 @@
     <div class="row">
         <div class="col image-box-area">
             <div class="row image-box-boder-box">
+                {% for solution in solutions %}
                 <div class="col-lg-4 col-md-6 image-box-boder">
                     <!-- ht-box-icon Start -->
                     <div class="ht-box-images style-09">
                         <div class="image-box-wrap">
                             <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-01-100x104.webp' %}" class="img-fluid" alt="">
+                                <img loading="lazy"src=" {% if solution.icon %}{{solution.icon.url}}{% endif %} " class="img-fluid" alt="">
                             </div>
                             <div class="content">
-                                <h6 class="heading">IT Design </h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
+                                <h6 class="heading">{{solution.name}}</h6>
+                                <div class="text">{{solution.short_description}}</div>
                                 <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
+                                    <a href="{% url "solution_details" solution.name %}">
                                         Learn more <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
@@ -24,111 +24,9 @@
                     </div>
                     <!-- ht-box-icon End -->
                 </div>
-                <div class="col-lg-4 col-md-6 image-box-boder">
-                    <!-- ht-box-icon Start -->
-                    <div class="ht-box-images style-09">
-                        <div class="image-box-wrap">
-                            <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-02-100x104.webp' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="content">
-                                <h6 class="heading">IT Management</h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
-                                <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
-                                        Learn more <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ht-box-icon End -->
-                </div>
-                <div class="col-lg-4 col-md-6 image-box-boder">
-                    <!-- ht-box-icon Start -->
-                    <div class="ht-box-images style-09">
-                        <div class="image-box-wrap">
-                            <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-03-100x104.webp' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="content">
-                                <h6 class="heading">Data Security</h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
-                                <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
-                                        Learn more <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ht-box-icon End -->
-                </div>
-                <div class="col-lg-4 col-md-6 image-box-boder">
-                    <!-- ht-box-icon Start -->
-                    <div class="ht-box-images style-09">
-                        <div class="image-box-wrap">
-                            <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-04-100x104.webp' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="content">
-                                <h6 class="heading">Infrastructure Plan</h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
-                                <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
-                                        Learn more <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ht-box-icon End -->
-                </div>
-                <div class="col-lg-4 col-md-6 image-box-boder">
-                    <!-- ht-box-icon Start -->
-                    <div class="ht-box-images style-09">
-                        <div class="image-box-wrap">
-                            <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-05-100x104.webp' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="content">
-                                <h6 class="heading">Firewall Advancement</h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
-                                <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
-                                        Learn more <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ht-box-icon End -->
-                </div>
-                <div class="col-lg-4 col-md-6 image-box-boder">
-                    <!-- ht-box-icon Start -->
-                    <div class="ht-box-images style-09">
-                        <div class="image-box-wrap">
-                            <div class="box-image">
-                                <img loading="lazy"src="{% static 'assets/images/icons/mitech-processing-service-image-06-100x104.webp' %}" class="img-fluid" alt="">
-                            </div>
-                            <div class="content">
-                                <h6 class="heading">Desktop Computing</h6>
-                                <div class="text">We provide the most responsive and functional IT design for companies and businesses worldwide.
-                                </div>
-                                <div class="more-arrow-link">
-                                    <a href="index-modern-it-company.html#">
-                                        Learn more <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ht-box-icon End -->
-                </div>
+                {% endfor %}
+             
+       
             </div>
         </div>
     </div>

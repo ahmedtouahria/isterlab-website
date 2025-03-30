@@ -47,11 +47,9 @@
                                                     <li class="has-children has-children--multilevel-submenu">
                                                         <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
                                                         <ul class="submenu">
-                                                            <li><a href="{% url "solution_details" %}"><span>IT Services</span></a></li>
-                                                            <li><a href="{% url "solution_details" %}"><span>Managed IT Services</span></a></li>
-                                                            <li><a href="{% url "solution_details" %}"><span>Industries</span></a></li>
-                                                            <li><a href="{% url "solution_details" %}"><span>Business solution</span></a></li>
-                                                            <li><a href="{% url "solution_details" %}"><span>IT Services Details</span></a></li>
+                                                            {% for solution in constance_solutions %}
+                                                            <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
+                                                            {% endfor %}
                                                         </ul>
                                                     </li>
                                                     <li class="">
@@ -62,13 +60,9 @@
                                                         <a href="index-modern-it-company.html#"><span>Services</span></a>
                                                         <!-- multilevel submenu -->
                                                         <ul class="submenu">
-                                                            <li><a href="{% url "service_details" %}"><span>Service desk</span></a></li>
-                                                            <li><a href="{% url "service_details" %}"><span>Quick support</span></a></li>
-                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
-                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
-                                                            <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
-                                                            <li class="text-color-primary"><a class="text-color-primary" href="{% url "services" %}"><span class="text-color-primary">View all</span></a></li>
-
+                                                            {% for service in constance_services %}
+                                                            <li><a href="{% url "service_details" service.name  %}"><span>{{service.name}}</span></a></li>
+                                                            {% endfor %}
                                                         </ul>
                                                     </li>
                                                     <li class="">
@@ -168,11 +162,9 @@
                         <li class="has-children has-children--multilevel-submenu">
                             <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
                             <ul class="sub-menu">
-                                <li><a href="{% url "solution_details" %}"><span>IT Services</span></a></li>
-                                <li><a href="{% url "solution_details" %}"><span>Managed IT Services</span></a></li>
-                                <li><a href="{% url "solution_details" %}"><span>Industries</span></a></li>
-                                <li><a href="{% url "solution_details" %}"><span>Business solution</span></a></li>
-                                <li><a href="{% url "solution_details" %}"><span>IT Services Details</span></a></li>
+                                {% for solution in constance_solutions %}
+                                <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
+                                {% endfor %}
                             </ul>
                         </li>
                         <li class="">
@@ -183,11 +175,9 @@
                             <a href="index-modern-it-company.html#"><span>Services</span></a>
                             <!-- multilevel submenu -->
                             <ul class="sub-menu">
-                                <li><a href="{% url "service_details" %}"><span>Service desk</span></a></li>
-                                <li><a href="{% url "service_details" %}"><span>Quick support</span></a></li>
-                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
-                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
-                                <li><a href="{% url "service_details" %}"><span>Cable management</span></a></li>
+                                {% for service in constance_services %}
+                                <li><a href="{% url "service_details" service.name  %}"><span>{{service.name}}</span></a></li>
+                                {% endfor %}
                                 <li class="text-color-primary"><a class="text-color-primary" href="{% url "services" %}"><span class="text-color-primary">View all</span></a></li>
 
                             </ul>

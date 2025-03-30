@@ -1,11 +1,14 @@
 from django.shortcuts import render
-
+from .models import *
 # Create your views here.
 
 
 def home(request):
-
-    return render(request, 'pages/home.html')
+    context = {
+        "solutions":Solution.objects.all(),
+        "brands":Brand.objects.all(),
+    }
+    return render(request, 'pages/home.html',context)
 
 
 
@@ -36,17 +39,25 @@ def contact(request):
 
 def coverages(request):
 
-    return render(request, 'pages/coverages.html')
+    context = {
+        "coverages": Coverage.objects.all()
+    }
+
+    return render(request, 'pages/coverages.html',context)
 
 
 
-def service_details(request):
+def service_details(request,name):
+    context = {
+        "service": Service.objects.get(name=name)
+    }
+    return render(request, 'pages/service_details.html',context)
 
-    return render(request, 'pages/service_details.html')
-
-def solution_details(request):
-
-    return render(request, 'pages/solution_details.html')
+def solution_details(request,name):
+    context = {
+        "solution":Solution.objects.get(name=name)
+    }
+    return render(request, 'pages/solution_details.html',context)
 
 def faq(request):
 

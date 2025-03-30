@@ -47,6 +47,13 @@ class Service(models.Model):
     video = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
 
+class ServiceFAQ(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE,related_name="faqs")
+    question = models.TextField()
+    response = models.TextField()
+    created_at = models.DateTimeField(auto_now=True)
+
 class Solution(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     name = models.CharField(max_length=255)
@@ -58,6 +65,14 @@ class Solution(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
 
+class SolutionFAQ(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    service = models.ForeignKey(Solution, on_delete=models.CASCADE,related_name="faqs")
+    question = models.TextField()
+    response = models.TextField()
+    created_at = models.DateTimeField(auto_now=True)
+
+
 class Coverage(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     name = models.CharField(max_length=255)
@@ -66,8 +81,6 @@ class Coverage(models.Model):
 
 class FAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     question = models.TextField()
     response = models.TextField()
     created_at = models.DateTimeField(auto_now=True)

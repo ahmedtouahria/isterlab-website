@@ -1,5 +1,8 @@
-from django.shortcuts import render
+import json
+from django.shortcuts import redirect, render
+import requests
 from .models import *
+from constance import config
 # Create your views here.
 
 
@@ -33,18 +36,49 @@ def why_us(request):
 
 
 def contact(request):
+    if request.method == 'POST':
+        con_name = request.POST.get('con_name')
+        con_email = request.POST.get('con_email')
+        con_subject = request.POST.get('con_subject')
+        con_message = request.POST.get('con_message')
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+
+         # Verify reCAPTCHA
+        secret_key = config.RECAPTCHA_SECRET_KEY
+        recaptcha_verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        data = {
+            'secret': secret_key,
+            'response': recaptcha_response
+        }
+        response = requests.post(recaptcha_verify_url, data=data)
+        result = response.json()
+
+        if result.get("success"):
+
+            contact_obj,_ = Contact.objects.get_or_create(
+                name = con_name,
+                email = con_email,
+                subject = con_subject,
+                message = con_message
+            )
+            # reCAPTCHA passed, process the form (e.g., send email, save to DB)
+            return render(request, 'pages/contact.html', {"message": "Your message has been sent successfully!"})
+        else:
+            # reCAPTCHA failed
+            return render(request, 'pages/contact.html', {"error": "reCAPTCHA verification failed. Please try again."})
+
 
     return render(request, 'pages/contact.html')
 
 
 def coverages(request):
-
+    coverages = list(Coverage.objects.values("name", "latitude", "longitude"))
+    
     context = {
-        "coverages": Coverage.objects.all()
+        "coverages_json": json.dumps(coverages)  # Convert to JSON for JavaScript
     }
-
-    return render(request, 'pages/coverages.html',context)
-
+    
+    return render(request, 'pages/coverages.html', context)
 
 
 def service_details(request,name):

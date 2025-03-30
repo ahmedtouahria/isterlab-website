@@ -21,7 +21,10 @@ class BrandAdmin(ModelAdmin):
     model = Brand
     list_display = ['name']
 
+class CovergeAdmin(ModelAdmin):
+    model = Coverage
+
 admin.site.register(Solution,SolutionsAdmin)
 admin.site.register(Service,ServiceAdmin)
-admin.site.register(Coverage)
+admin.site.register(Coverage,CovergeAdmin)
 admin.site.register(Brand,BrandAdmin)

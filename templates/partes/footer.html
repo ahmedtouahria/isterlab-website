@@ -6,55 +6,52 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 footer-widget">
                     <h6 class="footer-widget__title mb-20 text-white">Company</h6>
                     <ul class="footer-widget__list">
-                        <li class="text-white">Address: 92 Allee De La Guiche, 77310, Saint-Fargeau-Ponthierry, France.
+                        <li class="text-white">Address: {{config.ADDRESS}}
 
                         </li>
-                        <li><a href="mailto:contact@aeroland.com" class="hover-style-link text-white">contact@aeroland.com</a></li>
-                        <li><a href="tel:123344556" class="hover-style-link text-white font-weight--bold">(+68)1221 09876</a></li>
+                        <li><a href="mailto:{{config.EMAIL}}" class="hover-style-link text-white">{{config.EMAIL}}</a></li>
+                        <li><a href="tel:123344556" class="hover-style-link text-white font-weight--bold">{{config.PRIMARY_PHONE}}</a></li>
 
                     </ul>
                     <ul class="list ht-social-networks large-icon mt-20">
                         <li class="item">
-                            <a href="index-modern-it-company.html#" aria-label="Twitter" class="ps-0 social-link hint--bounce hint--top hint--primary text-white" target="_blank"> <i class="fab fa-twitter social-link-icon"></i> </a>
+                            <a href="{{config.X_PAGE}}" aria-label="Twitter" class="ps-0 social-link hint--bounce hint--top hint--primary text-white" target="_blank"> <i class="fab fa-twitter social-link-icon"></i> </a>
                         </li>
                         <li class="item">
-                            <a href="index-modern-it-company.html#" target="_blank" aria-label="Instagram" class="social-link hint--bounce hint--top hint--primary text-white"> <i class="fab fa-instagram social-link-icon"></i> </a>
+                            <a href="{{config.LINKEDIN_PAGE}}" target="_blank" aria-label="Instagram" class="social-link hint--bounce hint--top hint--primary text-white"> <i class="fab fa-linkedin social-link-icon"></i> </a>
                         </li>
                         <li class="item">
-                            <a href="index-modern-it-company.html#" target="_blank" aria-label="Dribbble" class="social-link hint--bounce hint--top hint--primary text-white"> <i class="fab fa-dribbble social-link-icon"></i> </a>
+                            <a href="{{config.FACEBOOK_PAGE}}" target="_blank" aria-label="Dribbble" class="social-link hint--bounce hint--top hint--primary text-white"> <i class="fab fa-facebook social-link-icon"></i> </a>
                         </li>
-                        <li class="item">
-                            <a href="index-modern-it-company.html#" target="_blank" aria-label="Pinterest" class="social-link hint--bounce hint--top hint--primary text-white"> <i class="fab fa-pinterest social-link-icon"></i> </a>
-                        </li>
+           
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-6 footer-widget">
                     <h6 class="footer-widget__title mb-20 text-white">IT Services</h6>
                     <ul class="footer-widget__list">
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Managed IT</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">IT Support</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">IT Consultancy</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Cloud Computing</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Cyber Security</a></li>
+                        {% for service in constance_services %}
+                        <li><a href="{% url "service_details" service.name %}" class="hover-style-link text-white">{{service.name}}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-6 footer-widget">
                     <h6 class="footer-widget__title mb-20 text-white">Quick links</h6>
                     <ul class="footer-widget__list">
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Pick up locations</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Terms of Payment</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Privacy Policy</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Where to Find Us</a></li>
+                        <li><a href="{% url "about" %}" class="hover-style-link text-white">About</a></li>
+                        <li><a href="#" class="hover-style-link text-white">Terms</a></li>
+                        <li><a href="#" class="hover-style-link text-white">Privacy Policy</a></li>
+                        <li><a href="{% url "coverages" %}" class="hover-style-link text-white">Where to Find Us</a></li>
+                        <li><a href="{% url "become_a_partner" %}" class="hover-style-link text-white">Partners</a></li>
+
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-6 footer-widget">
                     <h6 class="footer-widget__title mb-20 text-white">Support</h6>
                     <ul class="footer-widget__list">
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Forum Support</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Help & FAQ</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Contact Us</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Pricing and plans</a></li>
-                        <li><a href="index-modern-it-company.html#" class="hover-style-link text-white">Cookies Policy</a></li>
+                        <li><a href="#" class="hover-style-link text-white">Forum Support</a></li>
+                        <li><a href="{% url "faq" %}" class="hover-style-link text-white">Help & FAQ</a></li>
+                        <li><a href="{% url "contact" %}" class="hover-style-link text-white">Contact Us</a></li>
+                        <li><a href="" class="hover-style-link text-white">Cookies Policy</a></li>
                     </ul>
                 </div>
     

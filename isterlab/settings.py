@@ -1,7 +1,7 @@
 
 import os
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -158,4 +158,7 @@ CONSTANCE_CONFIG={
     'FACEBOOK_PAGE': ('', 'Facebook Page'),
     'X_PAGE': ('', 'X Page'),
     'LINKEDIN_PAGE': ('', 'LinkedIn Page'),
+    'RECAPTCHA_API_KEY': (config('RECAPTCHA_API_KEY',''), 'ReCAPTCHA API Key'),
+    'RECAPTCHA_SECRET_KEY': (config('RECAPTCHA_SECRET_KEY',''), 'ReCAPTCHA Secret Key'),
+
 }

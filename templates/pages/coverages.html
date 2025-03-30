@@ -59,33 +59,29 @@
 <script>
     var map = L.map('map').setView([20, 0], 3);
 
+
+
     // Use a tile layer without country borders
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
     }).addTo(map);
-
+    
     // Custom locations (Markers)
-    var locations = [
-    { name: "New York, USA", lat: 40.7128, lng: -74.0060 },
-    { name: "London, UK", lat: 51.5074, lng: -0.1278 },
-    { name: "Tokyo, Japan", lat: 35.6895, lng: 139.6917 },
-    { name: "Morocco", lat: 30.5731, lng: -7.0000 },
-    { name: "France, Paris", lat: 48.8575, lng: 2.3514 },
-    { name: "Kuwait, Kuwait", lat: 29.3117, lng: 47.4818 },
-    { name: "Riyadh, Saudi Arabia", lat: 24.7136, lng: 46.6753 },
-    { name: "Baku, Azerbaijan", lat: 40.4093, lng: 49.8671 },
-    { name: "Doha, Qatar", lat: 25.2769, lng: 51.5200 }
-    ];
+    var locations ={{ coverages_json|safe }};
 
     // Add markers for each location
     locations.forEach(function(location) {
-        L.marker([location.lat, location.lng])
+        L.marker([location.latitude, location.longitude])
             .addTo(map)
-            .bindPopup(`<b>${location.name}</b>`) // Click marker to see location name
-            .openPopup();
+            .bindPopup(`
+                <div style="text-align: center;">
+                    <img src="{% static "assets/images/logo/icon.ico" %}" alt="Logo" style="width:50px; height:50px; display:block; margin:0 auto;">
+                    <b>${location.name}</b>
+                </div>
+            `);
     });
-
+    
 </script>
 {% endblock js %}

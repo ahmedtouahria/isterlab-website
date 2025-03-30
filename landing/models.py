@@ -90,3 +90,16 @@ class Brand(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     logo = models.ImageField(upload_to="brands",)
     name = models.CharField(max_length=150)
+
+
+class Contact(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    subject = models.TextField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+    

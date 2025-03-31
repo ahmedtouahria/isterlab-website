@@ -23,7 +23,17 @@ def about(request):
 
 def services(request):
 
-    return render(request, 'pages/services.html')
+    context = {
+        "services": Service.objects.all(),
+    }
+
+    return render(request, 'pages/services.html',context)
+
+def solutions(request):
+    context = {
+        "solutions":Solution.objects.all(),
+    }
+    return render(request, 'pages/solutions.html',context)
 
 
 def project(request):

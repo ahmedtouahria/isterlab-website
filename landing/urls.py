@@ -5,6 +5,8 @@ urlpatterns = [
     path("",home,name="home"),
     path("about/",about,name="about"),
     path("services/",services,name="services"),
+    path("solutions/",solutions,name="solutions"),
+
     path("projects/",project,name="projects"),
     path("why_choose_isterlab/",why_us,name="why_us"),
     path("contact/",contact,name="contact"),

@@ -21,8 +21,8 @@
                                 <div class="header-bottom-inner">
                                     <div class="header-bottom-left-wrap">
                                         <!-- navigation menu -->
-                                        <div class="header__navigation d-none d-xl-block">
-                                            <nav class="navigation-menu primary--menu">
+                                        <div class="header__navigation  d-none d-xl-block">
+                                            <nav class="navigation-menu">
 
                                                 <ul>
                                                     <li class="">
@@ -50,12 +50,9 @@
                                                             {% for solution in constance_solutions %}
                                                             <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
                                                             {% endfor %}
+                                                            <li ><a class="text-color-primary fw" href="{% url "solutions"  %}"><span class="text-color-primary fw-bold">View all</span></a></li>
                                                             
                                                         </ul>
-                                                    </li>
-                                                    <li class="">
-                                                        <a href="{% url "why_us" %}"><span>Why choose us</span></a>
-                                              
                                                     </li>
                                                     <li class="has-children has-children--multilevel-submenu">
                                                         <a href="index-modern-it-company.html#"><span>Services</span></a>
@@ -83,17 +80,6 @@
                         <!-- header right box -->
                        <div class="header-right-box">
                             <div class="header-right-inner" id="hidden-icon-wrapper">
-
-                      
-                                <!-- header-search-form -->
-                                <div class="header-search-form default-search">
-                                    <form action="index-modern-it-company.html#" class="search-form-top">
-                                        <input class="search-field" type="text" placeholder="Search…">
-                                        <button class="search-submit">
-                                            <i class="search-btn-icon fa fa-search"></i>
-                                        </button>
-                                    </form>
-                                </div>
                             </div>
 
                             <!-- mobile menu -->

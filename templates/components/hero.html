@@ -1,0 +1,70 @@
+{% load static %}
+<div class="modern-it-company-top-area">
+
+    <!--============ Modern It Company Hero Start ============-->
+    <div class="modern-it-company-hero mb_40">
+
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="modern-it-company-hero-image">
+                    <img loading="lazy"src="{% static 'assets/images/hero/home-reputable-success.webp' %}" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-10 col-md-10">
+                    <div class="modern-it-company-hero-text  wow move-up section-space--pt_150">
+                        <h1 class="heading">Make your life easier with help from <mark class="text-color-primary"> {{config.WEBSITE_NAME}}</mark></h1>
+                        <h6 class="sort-dec">{{config.DESCRIPTION}} </h6>
+
+
+                        <div class="book-box">
+                            <div class="image">
+                                <img loading="lazy"src="{% static 'assets/images/icons/green-curve-arrow.webp' %}" class="img-fluid" alt="">
+                            </div>
+                            <h5 class="book-text font-weight--bold mb-15">Booking is open today with profitable incentives for beginners.</h5>
+                        </div>
+
+                        <div class="modern-it-company-form-wrap">
+                            <form id="contact-form" action="https://htmldemo.net/mitech/assets/php/hero-mail.php" method="post">
+                                <!-- <form id="contact-form" action="https://whizthemes.com/mail-php/jowel/mitech/php/hero-mail.php" method="post"> -->
+                                <div class="modern-it-company-contact-form-hero">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="contact-inner">
+                                                <input name="con_email" type="email" placeholder="Email *">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="contact-select">
+                                                <div class="form-item contact-inner">
+                                                    <span class="inquiry">
+                                                <select id="Visiting" name="Visiting">
+                                                    <option disabled="" selected="">Select Department to email</option>
+                                                    <option value="Your inquiry about">Your inquiry about</option>
+                                                    <option value="General Information Request">General Information Request</option>
+                                                    <option value="Partner Relations">Partner Relations</option>
+                                                    <option value="Careers">Careers</option>
+                                                    <option value="Software Licencing">Software Licencing</option>
+                                                </select>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="button-wrap">
+                                                <a href="index-modern-it-company.html#" class="ht-btn ht-btn-md ht-btn-full" type="submit">Get a free consultation</a>
+                                                <p class="form-messege"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============ Modern It Company Hero End ============-->
+
+
+</div>

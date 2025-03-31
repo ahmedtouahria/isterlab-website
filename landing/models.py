@@ -51,6 +51,9 @@ class Service(models.Model):
     def save(self, *args, **kwargs):
         if self.slug is None:
             self.slug = self.name.replace(" ","-").lower()
+
+        super(Service, self).save(*args, **kwargs) # Call the real save() method
+
 class ServiceFAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     service = models.ForeignKey(Service, on_delete=models.CASCADE,related_name="faqs")
@@ -72,6 +75,7 @@ class Solution(models.Model):
     def save(self, *args, **kwargs):
         if self.slug is None:
             self.slug = self.name.replace(" ","-").lower()
+        super(Solution, self).save(*args, **kwargs) # Call the real save() method
 
 class SolutionFAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)

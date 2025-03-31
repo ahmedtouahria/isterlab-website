@@ -101,3 +101,12 @@ def faq(request):
 def become_a_partner(request):
 
     return render(request, 'pages/become_a_partner.html')
+
+
+def blogs(request):
+
+    return render(request, 'pages/blogs.html')
+
+def privacy_terms(request):
+
+    return render(request, 'pages/terms_policy.html')

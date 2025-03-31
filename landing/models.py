@@ -46,7 +46,11 @@ class Service(models.Model):
     image = models.ImageField(upload_to='service_images/')
     video = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
+    slug = models.CharField(max_length=300,blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = self.name.replace(" ","-").lower()
 class ServiceFAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     service = models.ForeignKey(Service, on_delete=models.CASCADE,related_name="faqs")
@@ -63,7 +67,11 @@ class Solution(models.Model):
     image = models.ImageField(upload_to='service_images/')
     video = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
+    slug = models.CharField(max_length=300,blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = self.name.replace(" ","-").lower()
 
 class SolutionFAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
@@ -102,4 +110,21 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
+
+class Blog(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    content = RichTextField()
+    image = models.ImageField(upload_to="blogs", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    tags = models.TextField()
+    author = models.CharField(max_length=150,blank=True, null=True)
+    slug = models.CharField(max_length=300,blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = self.title.replace(" ","-").lower()
+        super(Blog, self).save(*args, **kwargs) # Call the real save() method

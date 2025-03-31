@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block breadcrumbs %}
+{% include "components/breadcrumbs.html" with section='Privacy and Terms of Use' %}
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+<div class="site-wrapper-reveal">
+    <div class="about-banner-wrap banner-space">
+
+    <div class="container">
+        <div class="row">
+            <div class="section-title-wrap text-center section-space--mb_30">
+                <h3 class="heading">Privacy policy and terms</h3>
+            </div>
+            <div class="section-title-wrap text-center section-space--mb_30">
+                {{config.PRIVACY | safe}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock content %}

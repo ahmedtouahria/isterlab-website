@@ -39,8 +39,8 @@
                                                             <li><a href="{% url "faq" %}"><span>FAQs</span></a></li>
                                                             <li><a href="{% url "become_a_partner" %}"><span>Become a partner</span></a></li>
 
-                                                            <li><a href="careers.html"><span>Careers</span></a></li>
-                                                            <li><a href="careers.html"><span>Blogs</span></a></li>
+{% comment %}                                                             <li><a href="careers.html"><span>Careers</span></a></li>
+ {% endcomment %}                                                            <li><a href="{% url "blogs" %}"><span>Blogs</span></a></li>
 
                                                         </ul>
                                                     </li> 
@@ -50,6 +50,7 @@
                                                             {% for solution in constance_solutions %}
                                                             <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
                                                             {% endfor %}
+                                                            
                                                         </ul>
                                                     </li>
                                                     <li class="">
@@ -63,6 +64,8 @@
                                                             {% for service in constance_services %}
                                                             <li><a href="{% url "service_details" service.name  %}"><span>{{service.name}}</span></a></li>
                                                             {% endfor %}
+                                                            <li ><a class="text-color-primary fw" href="{% url "services"  %}"><span class="text-color-primary fw-bold">View all</span></a></li>
+
                                                         </ul>
                                                     </li>
                                                     <li class="">

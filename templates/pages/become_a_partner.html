@@ -19,9 +19,13 @@
                 </div>
 
                 <div class="col-lg-6 col-lg-6">
+                    {% if message or error %}
+                    {% include "components/message.html" with message=message %}
+                    {% endif %}
                     <div class="contact-form-wrap">
 
-                        <form id="contact-form" action="" method="post">
+                        <form id="contact-form-02" method="post">
+                            {% csrf_token %}
                             <div class="contact-form">
                                 <div class="contact-input">
                                     <div class="contact-inner">
@@ -36,11 +40,17 @@
                                     <input name="company_name" type="text" placeholder="Company *" required>
                                 </div>
                                 <div class="contact-inner">
+                                    <input name="company_url" type="text" placeholder="Company url" required>
+                                </div>
+                                <div class="contact-inner">
                                     <input name="con_subject" type="text" placeholder="Subject *" required>
                                 </div>
                                 <div class="contact-inner contact-message">
                                     <textarea name="con_message" placeholder="How can we collaborate?" required></textarea>
                                 </div>
+                                     <!-- Hidden reCAPTCHA Token Field -->
+                                     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                            
                                 <div class="submit-btn mt-20">
                                     <button class="ht-btn ht-btn-md" type="submit">Send message</button>
                                     <p class="form-messege"></p>
@@ -126,3 +136,15 @@
 
 
 {% endblock content %}
+
+{% block js %}
+<!-- Google reCAPTCHA v3 Script -->
+<script src="https://www.google.com/recaptcha/api.js?render={{config.RECAPTCHA_API_KEY}}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute("{{config.RECAPTCHA_API_KEY}}", {action: "submit"}).then(function(token) {
+            document.getElementById("g-recaptcha-response").value = token;
+        });
+    });
+</script>
+{% endblock js %}

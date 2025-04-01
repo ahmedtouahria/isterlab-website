@@ -109,6 +109,41 @@ def faq(request):
 
 
 def become_a_partner(request):
+    if request.method == 'POST':
+        con_name = request.POST.get('con_name')
+        con_email = request.POST.get('con_email')
+        con_subject = request.POST.get('con_subject')
+        con_company = request.POST.get('company_name')
+        con_company_url = request.POST.get('company_url')
+
+        con_message = request.POST.get('con_message')
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+
+         # Verify reCAPTCHA
+        secret_key = config.RECAPTCHA_SECRET_KEY
+        recaptcha_verify_url = "https://www.google.com/recaptcha/api/siteverify"
+        data = {
+            'secret': secret_key,
+            'response': recaptcha_response
+        }
+        response = requests.post(recaptcha_verify_url, data=data)
+        result = response.json()
+
+        if result.get("success"):
+
+            contact_obj,_ = ContactPartner.objects.get_or_create(
+                name = con_name,
+                email = con_email,
+                subject = con_subject,
+                message = con_message,
+                company=con_company,
+                con_company_url = con_company_url
+            )
+            # reCAPTCHA passed, process the form (e.g., send email, save to DB)
+            return render(request, 'pages/become_a_partner.html', {"message": "Your message has been sent successfully!"})
+        else:
+            # reCAPTCHA failed
+            return render(request, 'pages/become_a_partner.html', {"error": "reCAPTCHA verification failed. Please try again."})
 
     return render(request, 'pages/become_a_partner.html')
 

@@ -143,13 +143,12 @@
                                 <li><a href="{% url "faq" %}"><span>FAQs</span></a></li>
                                 <li><a href="{% url "become_a_partner" %}"><span>Become a partner</span></a></li>
 
-                                <li><a href="careers.html"><span>Careers</span></a></li>
-                                <li><a href="careers.html"><span>Blogs</span></a></li>
+                                <li><a href="{% url "blogs" %}"><span>Blogs</span></a></li>
 
                             </ul>
                         </li> 
                         <li class="has-children has-children--multilevel-submenu">
-                            <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
+                            <a href="{% url "solutions" %}"><span>IT solutions</span></a>
                             <ul class="sub-menu">
                                 {% for solution in constance_solutions %}
                                 <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
@@ -161,7 +160,7 @@
                   
                         </li>
                         <li class="has-children has-children--multilevel-submenu">
-                            <a href="index-modern-it-company.html#"><span>Services</span></a>
+                            <a href="{% url "services" %}"><span>Services</span></a>
                             <!-- multilevel submenu -->
                             <ul class="sub-menu">
                                 {% for service in constance_services %}

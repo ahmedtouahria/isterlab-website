@@ -41,8 +41,11 @@ def project(request):
 
 
 def why_us(request):
-
-    return render(request, 'pages/why_us.html')
+    context = {
+        "brands":Brand.objects.all(),
+        
+    }
+    return render(request, 'pages/why_us.html',context)
 
 
 def contact(request):
@@ -104,8 +107,10 @@ def solution_details(request,name):
     return render(request, 'pages/solution_details.html',context)
 
 def faq(request):
-
-    return render(request, 'pages/faq.html')
+    context = {
+        "faqs":FAQ.objects.all()
+    }
+    return render(request, 'pages/faq.html',context)
 
 
 def become_a_partner(request):

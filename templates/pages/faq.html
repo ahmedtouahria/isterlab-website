@@ -22,148 +22,36 @@
             </div>
 
 
-            <div class="row ">
-                <div class="col-lg-6 pe-5">
+            <div class="row">
+                <div class="col-lg-12 pe-5">
                     <div class="faq-two-wrapper section-space--mt_40">
                         <div id="accordion_two">
+                            {% for faq in faqs %}
                             <div class="card">
-                                <div class="card-header" id="heading__10">
+                                <div class="card-header" id="heading__{{ faq.id }}">
                                     <h5 class="mb-0 font-weight--bold">
-                                        <button class="btn-link" data-bs-toggle="collapse" data-bs-target="#tab__10" aria-expanded="true" aria-controls="tab__10">
-                                            How can we help your business? <span>
-                                <i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i> </span>
+                                        <button class="btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__{{ faq.id }}" aria-expanded="false" aria-controls="collapse__{{ faq.id }}">
+                                            {{ faq.question }}
+                                            <span>
+                                                <i class="fas fa-chevron-circle-down"></i>
+                                                <i class="fas fa-chevron-circle-right"></i>
+                                            </span>
                                         </button>
                                     </h5>
                                 </div>
-
-                                <div id="tab__10" class="show" aria-labelledby="heading__10" data-bs-parent="#accordion_two">
+            
+                                <div id="collapse__{{ faq.id }}" class="collapse" aria-labelledby="heading__{{ faq.id }}" data-bs-parent="#accordion_two">
                                     <div class="card-body">
-                                        <p>Through the collaboration with customers in discussing needs and demand, we're able to attain mutual understanding, gain customer trust to offer appropriate advice, and bring about suggestions on suitable technology to transform your business. </p>
+                                        <p>{{ faq.response }}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__11">
-                                    <h5 class="mb-0">
-                                        <button class="btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__11" aria-expanded="false" aria-controls="collapse__11">
-                                            What are the advantages of {{config.WEBSITE_NAME}}?<span>
-                                <i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i>  </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__11" class="collapse" aria-labelledby="heading__11" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>{{config.WEBSITE_NAME}} takes into consideration every little detail to make sure the system run smoothly and responsively. {{config.WEBSITE_NAME}} employs a new technique called Minified Technology for securing customers' database & building up highly confidential firewalls. </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__12">
-                                    <h5 class="mb-0">
-                                        <button class="btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__12" aria-expanded="false" aria-controls="collapse__12">
-                                            How working process is simplified? <span><i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i> </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__12" class="collapse" aria-labelledby="heading__12" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>We reduce redundant complex calculations and lengthy erroneous code texts with simpler ones to ensure {{config.WEBSITE_NAME}} would run seamlessly and the design is reserved in its best form when viewed from a wide range of mobile devices & browsers. </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__13">
-                                    <h5 class="mb-0">
-                                        <button class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__13" aria-expanded="false" aria-controls="collapse__13">
-                                            Product Engineering & Services<span><i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i>  </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__13" class="collapse" aria-labelledby="heading__13" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>Our service offerings to enhance customer experience throughout the product lifecycle includes – test and repair, service management, and end-to-end warranty management. </p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-6 pe-5">
-                    <div class="faq-two-wrapper section-space--mt_40">
-                        <div id="accordion_two">
-                            <div class="card">
-                                <div class="card-header" id="heading__10">
-                                    <h5 class="mb-0 font-weight--bold">
-                                        <button class="btn-link" data-bs-toggle="collapse" data-bs-target="#tab__10" aria-expanded="true" aria-controls="tab__10">
-                                            How can we help your business? <span>
-                                <i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i> </span>
-                                        </button>
-                                    </h5>
-                                </div>
-
-                                <div id="tab__10" class="show" aria-labelledby="heading__10" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>Through the collaboration with customers in discussing needs and demand, we're able to attain mutual understanding, gain customer trust to offer appropriate advice, and bring about suggestions on suitable technology to transform your business. </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__11">
-                                    <h5 class="mb-0">
-                                        <button class="btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__11" aria-expanded="false" aria-controls="collapse__11">
-                                            What are the advantages of {{config.WEBSITE_NAME}}?<span>
-                                <i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i>  </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__11" class="collapse" aria-labelledby="heading__11" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>{{config.WEBSITE_NAME}} takes into consideration every little detail to make sure the system run smoothly and responsively. {{config.WEBSITE_NAME}} employs a new technique called Minified Technology for securing customers' database & building up highly confidential firewalls. </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__12">
-                                    <h5 class="mb-0">
-                                        <button class="btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__12" aria-expanded="false" aria-controls="collapse__12">
-                                            How working process is simplified? <span><i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i> </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__12" class="collapse" aria-labelledby="heading__12" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>We reduce redundant complex calculations and lengthy erroneous code texts with simpler ones to ensure {{config.WEBSITE_NAME}} would run seamlessly and the design is reserved in its best form when viewed from a wide range of mobile devices & browsers. </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="heading__13">
-                                    <h5 class="mb-0">
-                                        <button class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapse__13" aria-expanded="false" aria-controls="collapse__13">
-                                            Product Engineering & Services<span><i class="fas fa-chevron-circle-down"></i>
-                                <i class="fas fa-chevron-circle-right"></i>  </span>
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapse__13" class="collapse" aria-labelledby="heading__13" data-bs-parent="#accordion_two">
-                                    <div class="card-body">
-                                        <p>Our service offerings to enhance customer experience throughout the product lifecycle includes – test and repair, service management, and end-to-end warranty management. </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+            
         </div>
     </div>
     <!--====================  Accordion area  ====================-->

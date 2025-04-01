@@ -1,0 +1,84 @@
+{% extends "chatbot/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="tyn-quick-chat-box ">
+    <div class="tyn-quick-chat-head">
+        <div class="tyn-media-group">
+            <div class="tyn-media tyn-size-rg">
+                <img src="{% static 'chatbot/assets/images/avatar/bot-1.jpg' %}" alt="">
+            </div><!-- .tyn-media -->
+            <div class="tyn-media-col">
+                <div class="tyn-media-row">
+                    <h6 class="name">Isterab agent</h6>
+                </div>
+                <div class="tyn-media-row has-dot-sap">
+                    <span class="meta">Active</span>
+                </div>
+            </div><!-- .tyn-media-col -->
+        </div><!-- .tyn-media-group -->
+    </div><!-- .tyn-quick-chat-head -->
+    <div class="tyn-quick-chat-reply js-scroll-to-end">
+        <div class="tyn-reply tyn-reply-quick" id="tynQuickReply">
+            <div class="tyn-reply-item outgoing">
+                <div class="tyn-reply-group">
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text"> Do you know which App or feature it will require to set up. </div><!-- tyn-reply-text -->
+                    </div><!-- .tyn-reply-bubble -->
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text"> These article helps. </div><!-- tyn-reply-text -->
+                    </div><!-- .tyn-reply-bubble -->
+                </div><!-- .tyn-reply-group -->
+            </div><!-- .tyn-reply-item -->
+            <div class="tyn-reply-item incoming">
+                <div class="tyn-reply-avatar">
+                    <div class="tyn-media tyn-size-md tyn-circle">
+                        <img src="{% static 'chatbot/assets/images/avatar/bot-1.jpg' %}" alt="">
+                    </div>
+                </div><!-- .tyn-reply-avatar -->
+                <div class="tyn-reply-group">
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-link">
+                            <a class="tyn-reply-anchor" href="https://www.envato.com/atomic-power-plant-engine/">https://www.envato.com/atomic-power-plant-engine/</a>
+                        </div>
+                    </div><!-- .tyn-reply-bubble -->
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text"> I hope these article helps. </div>
+                    </div><!-- .tyn-reply-bubble -->
+                </div><!-- .tyn-reply-group -->
+            </div><!-- .tyn-reply-item -->
+            <div class="tyn-reply-separator">May 10, 2022, 11:14 AM</div>
+            <div class="tyn-reply-item outgoing">
+                <div class="tyn-reply-group">
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text"> Yes, you can reset your password online. Go to the login page, click on "Forgot Password," and follow the instructions to reset it. </div><!-- tyn-reply-text -->
+                    </div><!-- .tyn-reply-bubble -->
+                </div><!-- .tyn-reply-group -->
+            </div><!-- .tyn-reply-item -->
+            <div class="tyn-reply-item incoming">
+                <div class="tyn-reply-avatar">
+                    <div class="tyn-media tyn-size-md tyn-circle">
+                        <img src="{% static 'chatbot/assets/images/avatar/bot-1.jpg' %}" alt="">
+                    </div>
+                </div><!-- .tyn-reply-avatar -->
+                <div class="tyn-reply-group">
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text"> How do I reset my password? Can I do it online? </div>
+                    </div><!-- .tyn-reply-bubble -->
+                </div><!-- .tyn-reply-group -->
+            </div><!-- .tyn-reply-item -->
+        </div><!-- .tyn-reply -->
+    </div><!-- .tyn-quick-chat-reply -->
+    <div class="tyn-quick-chat-form">
+        <div class="tyn-chat-form-input bg-light" id="tynQuickChatInput" contenteditable></div>
+        <ul class="tyn-list-inline me-n2 my-1">
+            <li><button class="btn btn-icon btn-white btn-sm btn-pill">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                    </svg><!-- send-fill -->
+                </button></li>
+        </ul><!-- .tyn-list-inline -->
+    </div><!-- .tyn-quick-chat-form -->
+
+</div><!-- .tyn-quick-chat-box -->
+{% endblock content %}

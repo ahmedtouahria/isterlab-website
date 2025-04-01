@@ -19,7 +19,7 @@
     <meta property="og:title" content="{{ config.WEBSITE_NAME }} - Technology IT Solutions">
     <meta property="og:description" content="{{config.DESCRIPTION}}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:image" content="{{MEDIA_URL}}{{config.BANNER}}">
+    <meta property="og:image" content="{{ request.build_absolute_uri }}media/{{config.BANNER}}">
     <meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
     <meta property="og:locale" content="en_US">
     
@@ -27,7 +27,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - Technology IT Solutions">
     <meta name="twitter:description" content="We offer expert IT solutions for businesses, including web development, cloud computing, and AI services.">
-    <meta name="twitter:image" content="{{ request.build_absolute_uri }}{% static 'assets/images/logo/logo.png' %}">
+    <meta name="twitter:image" content="{{ request.build_absolute_uri }}media/{{config.BANNER}}">
     <meta name="twitter:site" content="@isterlab_global">
     
     <!-- Canonical URL (Prevents Duplicate Content Issues) -->

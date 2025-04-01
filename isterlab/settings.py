@@ -154,7 +154,7 @@ CONSTANCE_CONFIG={
     'WEBSITE_NAME': ("Isterlab", 'WEBSITE NAME'),
     'LOGO': ("",'','image_field'),
     'PRIVACY': ("",'PRIVACY'),
-
+    'BANNER': ("",'BANNER','image_field'),
     'DESCRIPTION': ("Team up with the best collaboration from the right expertises.", 'WEBSITE DESCRIPTION'),
     'PRIMARY_PHONE': ('', 'PRIMARY_PHONE'),
     'SECONDARY_PHONE': ('', 'SECONDARY_PHONE'),

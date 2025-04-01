@@ -18,6 +18,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['isterlab.qateeb.com','127.0.0.1']
 
 
+CSRF_TRUSTED_ORIGINS = [f"http://{host}" for host in ALLOWED_HOSTS] + [f"https://{host}" for host in ALLOWED_HOSTS]
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB in bytes
+
 # Application definition
 
 INSTALLED_APPS = [

@@ -40,7 +40,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=smart_toy" />
     <!-- Preload important CSS (critical styles) -->
     <link rel="preload" href="{% static 'assets/css/vendor/vendor.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{% static 'assets/css/plugins/plugins.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -50,6 +50,70 @@
     <!-- Load main style normally (critical CSS) -->
     <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}">
 
+    <style>
+
+        /* Floating Button */
+        .chat-float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* Chat iframe container */
+        .chat-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+
+        }
+
+        /* Close Button */
+        .chat-header {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            border: none;
+            font-size: 16px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .chat-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 
     {% block styles %}
     {% endblock styles %}
@@ -76,13 +140,9 @@
 
     </div>
 
-    <!--====================  scroll top ====================-->
-    <a href="index-modern-it-company.html#" class="scroll-top" id="scroll-top">
-        <i class="arrow-top fas fa-chevron-up"></i>
-        <i class="arrow-bottom fas fa-chevron-up"></i>
-    </a>
-    <!--====================  End of scroll top  ====================-->
+    <button class="chat-float-btn" id="chatButton">💬</button>
 
+    <!--====================  End of scroll top  ====================-->
 
     <!--====================  search overlay ====================-->
     <div class="search-overlay" id="search-overlay">
@@ -110,7 +170,14 @@
         </div>
     </div>
     <!--====================  End of search overlay  ====================-->
-
+   <!-- Chat Box Container -->
+   <div class="chat-container" id="chatBox">
+    <div class="chat-header">
+        Live Chat
+        <button class="close-btn" id="closeChat">✖</button>
+    </div>
+    <iframe class="chat-frame" src="http://127.0.0.1:8000/chatbot_view/#"></iframe>
+</div>
 
     <!-- JS
     ============================================ -->
@@ -130,7 +197,15 @@
 
     <!-- Main JS -->
     <script src="{% static 'assets/js/main.js' %}" defer></script>
+    <script>
+        document.getElementById("chatButton").addEventListener("click", function () {
+            document.getElementById("chatBox").style.display = "flex";
+        });
 
+        document.getElementById("closeChat").addEventListener("click", function () {
+            document.getElementById("chatBox").style.display = "none";
+        });
+    </script>
     {% block js %}
     
     {% endblock js %}

@@ -24,7 +24,7 @@
     </div><!-- .tyn-root -->
     <!-- Page Scripts -->
     <script src="{% static 'chatbot/assets/js/bundle.js' %}"></script>
-    <script src="{% static 'chatbot/assets/js/app.js' %}"></script>
+    {% block js %}{% endblock js %}
 </body>
 
 </html>

@@ -1,29 +1,24 @@
 import json
 import re
 import uuid
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
-from datetime import datetime
-
-
-import json
-import re
 from datetime import datetime
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
-
+from openai import OpenAI
+from decouple import config
 class ChatConsumer(WebsocketConsumer):
     """
-    Chatbot Consumer for handling WebSocket connections.
+    AI-powered Chatbot Consumer for handling WebSocket connections.
     - Connects to a chat room.
     - Receives user messages.
-    - Sends automated chatbot responses.
+    - Generates AI-based chatbot responses.
     """
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.room_name = None
         self.room_group_name = None
+        self.client = OpenAI(api_key=config("OPENAI_API_KEY"))
     
     def connect(self):
         self.room_name = str(uuid.uuid4())  # Generate a random room name
@@ -35,6 +30,7 @@ class ChatConsumer(WebsocketConsumer):
         )
         
         self.accept()
+
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
@@ -50,7 +46,7 @@ class ChatConsumer(WebsocketConsumer):
             self.send_error_message("Invalid message format.")
             return
         
-        bot_response = self.generate_bot_response(user_message)
+        bot_response = self.generate_ai_response(user_message)
         
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
@@ -65,20 +61,29 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps(event))
 
     def is_valid_message(self, message):
-        """Allow only alphanumeric characters and spaces."""
+        """Allow only alphanumeric characters and basic punctuation."""
         return bool(re.match(r'^[a-zA-Z0-9\s!?.,]*$', message))
     
-    def generate_bot_response(self, user_message):
-        """Basic chatbot logic to respond to messages."""
-        user_message = user_message.lower()
-        if "hello" in user_message:
-            return "Hello! How can I help you today?"
-        elif "how are you" in user_message:
-            return "I'm just a bot, but I'm doing great! How about you?"
-        elif "bye" in user_message:
-            return "Goodbye! Have a great day!"
-        else:
-            return "I'm not sure how to respond to that. Can you ask something else?"
+    def generate_ai_response(self, user_message):
+        """Generates a response using DeepSeek AI."""
+        try:
+            response = self.client.chat.completions.create(
+                model="o3-mini",
+                messages=[
+                    {"role": "system", "content": """
+                     You are a helpful assistant providing information about the isterlab-global.com website.
+                     please the answer must be less than 100 words.
+                     
+                     """},
+                    {"role": "user", "content": user_message},
+                ],
+                stream=False
+            )
+            print (response)
+            return response.choices[0].message.content
+        except Exception as e:
+            print(e)
+            return "I'm having trouble generating a response. Please try again later."
     
     def send_error_message(self, error_message):
         self.send(text_data=json.dumps({

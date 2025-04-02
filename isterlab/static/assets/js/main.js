@@ -54,7 +54,7 @@
             evt.preventDefault();
         });
     }
-    scrollToTop();
+    //scrollToTop();
     
     /*=========================================
     =            Preloader active            =

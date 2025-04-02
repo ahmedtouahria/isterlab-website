@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'landing',
     'chatbot'
 ]
+# Allow embedding in iframes
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CHANNEL_LAYERS = {

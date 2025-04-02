@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<div class="tyn-quick-chat-box ">
+<div class="tyn-quick-chat-box " id="tynChatBody">
     <div class="tyn-quick-chat-head">
         <div class="tyn-media-group">
             <div class="tyn-media tyn-size-rg">
@@ -19,17 +19,7 @@
         </div><!-- .tyn-media-group -->
     </div><!-- .tyn-quick-chat-head -->
     <div class="tyn-quick-chat-reply js-scroll-to-end">
-        <div class="tyn-reply tyn-reply-quick" id="tynQuickReply">
-            <div class="tyn-reply-item outgoing">
-                <div class="tyn-reply-group">
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> Do you know which App or feature it will require to set up. </div><!-- tyn-reply-text -->
-                    </div><!-- .tyn-reply-bubble -->
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> These article helps. </div><!-- tyn-reply-text -->
-                    </div><!-- .tyn-reply-bubble -->
-                </div><!-- .tyn-reply-group -->
-            </div><!-- .tyn-reply-item -->
+        <div class="tyn-reply tyn-reply-quick" id="tynReply">
             <div class="tyn-reply-item incoming">
                 <div class="tyn-reply-avatar">
                     <div class="tyn-media tyn-size-md tyn-circle">
@@ -38,41 +28,18 @@
                 </div><!-- .tyn-reply-avatar -->
                 <div class="tyn-reply-group">
                     <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-link">
-                            <a class="tyn-reply-anchor" href="https://www.envato.com/atomic-power-plant-engine/">https://www.envato.com/atomic-power-plant-engine/</a>
-                        </div>
-                    </div><!-- .tyn-reply-bubble -->
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> I hope these article helps. </div>
+                        <div class="tyn-reply-text"> Hi there! how can i help you ? </div>
                     </div><!-- .tyn-reply-bubble -->
                 </div><!-- .tyn-reply-group -->
-            </div><!-- .tyn-reply-item -->
-            <div class="tyn-reply-separator">May 10, 2022, 11:14 AM</div>
-            <div class="tyn-reply-item outgoing">
-                <div class="tyn-reply-group">
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> Yes, you can reset your password online. Go to the login page, click on "Forgot Password," and follow the instructions to reset it. </div><!-- tyn-reply-text -->
-                    </div><!-- .tyn-reply-bubble -->
-                </div><!-- .tyn-reply-group -->
-            </div><!-- .tyn-reply-item -->
-            <div class="tyn-reply-item incoming">
-                <div class="tyn-reply-avatar">
-                    <div class="tyn-media tyn-size-md tyn-circle">
-                        <img src="{% static 'chatbot/assets/images/avatar/bot-1.jpg' %}" alt="">
-                    </div>
-                </div><!-- .tyn-reply-avatar -->
-                <div class="tyn-reply-group">
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> How do I reset my password? Can I do it online? </div>
-                    </div><!-- .tyn-reply-bubble -->
-                </div><!-- .tyn-reply-group -->
-            </div><!-- .tyn-reply-item -->
+            </div>
+            
+            <!-- .tyn-reply-item -->
         </div><!-- .tyn-reply -->
     </div><!-- .tyn-quick-chat-reply -->
     <div class="tyn-quick-chat-form">
-        <div class="tyn-chat-form-input bg-light" id="tynQuickChatInput" contenteditable></div>
+        <div class="tyn-chat-form-input bg-light" id="tynChatInput" contenteditable></div>
         <ul class="tyn-list-inline me-n2 my-1">
-            <li><button class="btn btn-icon btn-white btn-sm btn-pill">
+            <li><button class="btn btn-icon btn-white btn-sm btn-pill " id="tynChatSend">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                         <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
                     </svg><!-- send-fill -->
@@ -82,3 +49,132 @@
 
 </div><!-- .tyn-quick-chat-box -->
 {% endblock content %}
+
+{% block js %}
+<script>
+    function initializeChat() {
+        let chatSend = document.querySelector('#tynChatSend');
+        let chatInput = document.querySelector('#tynChatInput');
+        let chatReply = document.querySelector('#tynReply');
+        let chatBody = document.querySelector('#tynChatBody');
+        let socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+    
+        socket.onmessage = function(event) {
+            let data = JSON.parse(event.data);
+            if (data.type === "chat.message") {
+                removeTypingIndicator();
+                typeMessage(data.message);
+            }
+        };
+    
+        chatSend && chatSend.addEventListener("click", function(event) {
+            event.preventDefault();
+            handleSendMessage(socket);
+        });
+    
+        chatInput && chatInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                chatSend.click();
+            }
+        });
+    }
+    
+    function handleSendMessage(socket) {
+        let chatInput = document.querySelector('#tynChatInput');
+        let getInput = chatInput.innerText.trim();
+    
+        if (getInput === "") return;
+    
+        appendMessage(getInput, true);
+        chatInput.innerHTML = "";
+        //scrollToBottom();
+        
+        let messageData = {
+            "type": "chat.message",
+            "message": getInput
+        };
+        
+        socket.send(JSON.stringify(messageData));
+        showTypingIndicator();
+    }
+    
+    function appendMessage(message, isUser) {
+        let chatReply = document.querySelector('#tynReply');
+        let chatBubble = `
+            <div class="tyn-reply-bubble">
+                <div class="tyn-reply-text">${message}</div>
+            </div>
+        `;
+        
+        let outgoingWrapper = `<div class="tyn-reply-item ${isUser ? 'outgoing' : 'incoming'}">
+            ${!isUser ?`<div class="tyn-reply-avatar">
+                <div class="tyn-media tyn-size-md tyn-circle">
+                    <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
+                </div>
+            </div>` :''}
+            <div class="tyn-reply-group"></div>
+        </div>`;
+        
+        if (!chatReply.querySelector('.tyn-reply-item:last-child') || 
+            !chatReply.querySelector('.tyn-reply-item:last-child').classList.contains(isUser ? 'outgoing' : 'incoming')) {
+            chatReply.insertAdjacentHTML("beforeend", outgoingWrapper);
+        }
+        
+        let replyGroup = chatReply.querySelector('.tyn-reply-item:last-child .tyn-reply-group');
+        replyGroup.insertAdjacentHTML("beforeend", chatBubble);
+        return replyGroup.querySelector('.tyn-reply-bubble .tyn-reply-text');
+    }
+    
+    function typeMessage(message) {
+        let textElement = appendMessage("", false);
+        let index = 0;
+    
+        function typeChar() {
+            if (index < message.length) {
+                textElement.innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeChar, 30);
+            }
+        }
+        typeChar();
+    }
+    
+    function showTypingIndicator() {
+        let chatReply = document.querySelector('#tynReply');
+        let typingIndicator = `
+            <div class="tyn-reply-item incoming typing-indicator">
+                <div class="tyn-reply-avatar">
+                    <div class="tyn-media tyn-size-md tyn-circle">
+                        <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="tyn-reply-group">
+                    <div class="tyn-reply-bubble">
+                        <div class="tyn-reply-text">Typing...</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        chatReply.insertAdjacentHTML("beforeend", typingIndicator);
+        //scrollToBottom();
+    }
+    
+    function removeTypingIndicator() {
+        let typingBubble = document.querySelector('.typing-indicator');
+        if (typingBubble) {
+            typingBubble.remove();
+        }
+    }
+    
+    function scrollToBottom() {
+        let chatBody = document.querySelector('#tynChatBody');
+        let simpleBody = SimpleBar.instances.get(chatBody);
+        let height = chatBody.querySelector('.simplebar-content > *').scrollHeight;
+        simpleBody.getScrollElement().scrollTop = height;
+    }
+    
+    document.addEventListener("DOMContentLoaded", initializeChat);
+
+</script>
+{% endblock js %}

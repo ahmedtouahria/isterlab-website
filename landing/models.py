@@ -130,7 +130,13 @@ class ContactPartner(models.Model):
     def __str__(self):
         return self.name
 
+class NewslaterSubscriber(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    email = models.EmailField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.email
 
 
 class Blog(models.Model):

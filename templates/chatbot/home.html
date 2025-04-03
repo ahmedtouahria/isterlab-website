@@ -28,7 +28,7 @@
                 </div><!-- .tyn-reply-avatar -->
                 <div class="tyn-reply-group">
                     <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text"> Hi there! how can i help you ? </div>
+                        <div class="tyn-reply-text">  Hello! I'm the Isterlab agent, here to assist you with any inquiries you might have about our services, products, or any other information related to Isterlab Global. Whether you're looking for details on our laboratory solutions, need help navigating our website, or have specific questions about our offerings, feel free to ask. I'm here to help you make the most of your experience with us. How can I assist you today? </div>
                     </div><!-- .tyn-reply-bubble -->
                 </div><!-- .tyn-reply-group -->
             </div>
@@ -36,18 +36,19 @@
             <!-- .tyn-reply-item -->
         </div><!-- .tyn-reply -->
     </div><!-- .tyn-quick-chat-reply -->
-    <div class="tyn-quick-chat-form">
-        <div class="tyn-chat-form-input bg-light" id="tynChatInput" contenteditable></div>
-        <ul class="tyn-list-inline me-n2 my-1">
-            <li><button class="btn btn-icon btn-white btn-sm btn-pill " id="tynChatSend">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
-                    </svg><!-- send-fill -->
-                </button></li>
-        </ul><!-- .tyn-list-inline -->
-    </div><!-- .tyn-quick-chat-form -->
 
 </div><!-- .tyn-quick-chat-box -->
+<div class="tyn-quick-chat-form">
+    <div class="tyn-chat-form-input bg-light" id="tynChatInput" contenteditable></div>
+    <ul class="tyn-list-inline me-n2 my-1">
+        <li><button class="btn btn-icon btn-white btn-sm btn-pill " id="tynChatSend">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                </svg><!-- send-fill -->
+            </button></li>
+    </ul><!-- .tyn-list-inline -->
+</div><!-- .tyn-quick-chat-form -->
+
 {% endblock content %}
 
 {% block js %}
@@ -57,15 +58,8 @@
         let chatInput = document.querySelector('#tynChatInput');
         let chatReply = document.querySelector('#tynReply');
         let chatBody = document.querySelector('#tynChatBody');
-        let socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
     
-        socket.onmessage = function(event) {
-            let data = JSON.parse(event.data);
-            if (data.type === "chat.message") {
-                removeTypingIndicator();
-                typeMessage(data.message);
-            }
-        };
+        let socket = createWebSocket();
     
         chatSend && chatSend.addEventListener("click", function(event) {
             event.preventDefault();
@@ -80,6 +74,35 @@
         });
     }
     
+    function createWebSocket() {
+        let socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+    
+        socket.onopen = function() {
+            console.log("✅ Connected to WebSocket");
+        };
+    
+        socket.onmessage = function(event) {
+            let data = JSON.parse(event.data);
+            if (data.type === "chat.message") {
+                removeTypingIndicator();
+                typeMessage(data.message);
+            }
+        };
+    
+        socket.onerror = function(error) {
+            console.error("❌ WebSocket Error:", error);
+        };
+    
+        socket.onclose = function(event) {
+            console.warn("⚠️ WebSocket Disconnected. Reconnecting in 3 seconds...", event);
+            setTimeout(() => {
+                createWebSocket(); // Auto-reconnect
+            }, 3000);
+        };
+    
+        return socket;
+    }
+    
     function handleSendMessage(socket) {
         let chatInput = document.querySelector('#tynChatInput');
         let getInput = chatInput.innerText.trim();
@@ -88,15 +111,21 @@
     
         appendMessage(getInput, true);
         chatInput.innerHTML = "";
-        //scrollToBottom();
-        
+        scrollToBottom();
+    
         let messageData = {
             "type": "chat.message",
             "message": getInput
         };
-        
-        socket.send(JSON.stringify(messageData));
-        showTypingIndicator();
+    
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(messageData));
+            showTypingIndicator();
+        } else {
+            socket = createWebSocket()
+            console.warn("⚠️ Message not sent. WebSocket is not connected.");
+            handleSendMessage(socket) 
+        }
     }
     
     function appendMessage(message, isUser) {
@@ -106,21 +135,21 @@
                 <div class="tyn-reply-text">${message}</div>
             </div>
         `;
-        
+    
         let outgoingWrapper = `<div class="tyn-reply-item ${isUser ? 'outgoing' : 'incoming'}">
-            ${!isUser ?`<div class="tyn-reply-avatar">
+            ${!isUser ? `<div class="tyn-reply-avatar">
                 <div class="tyn-media tyn-size-md tyn-circle">
                     <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
                 </div>
-            </div>` :''}
+            </div>` : ''}
             <div class="tyn-reply-group"></div>
         </div>`;
-        
+    
         if (!chatReply.querySelector('.tyn-reply-item:last-child') || 
             !chatReply.querySelector('.tyn-reply-item:last-child').classList.contains(isUser ? 'outgoing' : 'incoming')) {
             chatReply.insertAdjacentHTML("beforeend", outgoingWrapper);
         }
-        
+    
         let replyGroup = chatReply.querySelector('.tyn-reply-item:last-child .tyn-reply-group');
         replyGroup.insertAdjacentHTML("beforeend", chatBubble);
         return replyGroup.querySelector('.tyn-reply-bubble .tyn-reply-text');
@@ -138,6 +167,7 @@
             }
         }
         typeChar();
+        scrollToBottom();
     }
     
     function showTypingIndicator() {
@@ -157,7 +187,6 @@
             </div>
         `;
         chatReply.insertAdjacentHTML("beforeend", typingIndicator);
-        //scrollToBottom();
     }
     
     function removeTypingIndicator() {
@@ -168,13 +197,10 @@
     }
     
     function scrollToBottom() {
-        let chatBody = document.querySelector('#tynChatBody');
-        let simpleBody = SimpleBar.instances.get(chatBody);
-        let height = chatBody.querySelector('.simplebar-content > *').scrollHeight;
-        simpleBody.getScrollElement().scrollTop = height;
+        window.scrollTo(0, document.body.scrollHeight);
     }
     
     document.addEventListener("DOMContentLoaded", initializeChat);
-
+    
 </script>
 {% endblock js %}

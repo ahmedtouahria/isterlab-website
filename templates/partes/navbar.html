@@ -29,7 +29,7 @@
                                                         <a href="{% url "home" %}"><span>Home</span></a>
                                                     </li>
                                                     <li class="has-children has-children--multilevel-submenu">
-                                                        <a href="index-modern-it-company.html#"><span>Company</span></a>
+                                                        <a href="#"><span>Company</span></a>
                                                         <ul class="submenu">
                                                             <li class="">
                                                                 <a href="{% url "about" %}"><span>About us</span></a>
@@ -45,7 +45,7 @@
                                                         </ul>
                                                     </li> 
                                                     <li class="has-children has-children--multilevel-submenu">
-                                                        <a href="index-modern-it-company.html#"><span>IT solutions</span></a>
+                                                        <a href="#"><span>IT solutions</span></a>
                                                         <ul class="submenu">
                                                             {% for solution in constance_solutions %}
                                                             <li><a href="{% url "solution_details" solution.name %}"><span>{{solution.name}}</span></a></li>                                
@@ -55,7 +55,7 @@
                                                         </ul>
                                                     </li>
                                                     <li class="has-children has-children--multilevel-submenu">
-                                                        <a href="index-modern-it-company.html#"><span>Services</span></a>
+                                                        <a href="#"><span>Services</span></a>
                                                         <!-- multilevel submenu -->
                                                         <ul class="submenu">
                                                             {% for service in constance_services %}
@@ -133,7 +133,7 @@
                             <a href="{% url "home" %}"><span>Home</span></a>
                         </li>
                         <li class="has-children has-children--multilevel-submenu">
-                            <a href="index-modern-it-company.html#"><span>Company</span></a>
+                            <a href="#"><span>Company</span></a>
                             <ul class="sub-menu">
                                 <li class="">
                                     <a href="{% url "about" %}"><span>About us</span></a>

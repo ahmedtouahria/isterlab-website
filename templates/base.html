@@ -90,13 +90,14 @@
 
         /* Close Button */
         .chat-header {
-            background: #007bff;
+            background: #2f3193;
             color: white;
             padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 16px;
+            cursor: pointer;
         }
 
         .close-btn {
@@ -133,14 +134,16 @@
         {% endblock content %}
 
 
-        <!--====================  footer area ====================-->
-        {% include "partes/footer.html" %}
-        <!--====================  End of footer area  ====================-->
+    <!--====================  footer area ====================-->
+    {% include "partes/footer.html" %}
+    <!--====================  End of footer area  ====================-->
 
 
     </div>
 
-    <button class="chat-float-btn" id="chatButton">💬</button>
+    <button class="chat-float-btn" id="chatButton"><i class="material-symbols-outlined">
+        smart_toy
+        </i></button>
 
     <!--====================  End of scroll top  ====================-->
 
@@ -173,8 +176,6 @@
    <!-- Chat Box Container -->
    <div class="chat-container" id="chatBox">
     <div class="chat-header">
-        Live Chat
-        <button class="close-btn" id="closeChat">✖</button>
     </div>
     <iframe class="chat-frame" src="http://127.0.0.1:8000/chatbot_view/#"></iframe>
 </div>
@@ -199,12 +200,14 @@
     <script src="{% static 'assets/js/main.js' %}" defer></script>
     <script>
         document.getElementById("chatButton").addEventListener("click", function () {
-            document.getElementById("chatBox").style.display = "flex";
+            let chatBox = document.getElementById("chatBox");
+            chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
         });
-
-        document.getElementById("closeChat").addEventListener("click", function () {
+        
+        document.getElementById("chatBox").addEventListener("click", function () {
             document.getElementById("chatBox").style.display = "none";
         });
+
     </script>
     {% block js %}
     

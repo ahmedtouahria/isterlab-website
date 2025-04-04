@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
+{% block styles %}
+<style>
+    h2{
+        padding-top:20px;
+        padding-bottom:20px;
+        font-size:30px;
+    }
+</style>
+{% endblock styles %}
 {% block content %}
 <div class="site-wrapper-reveal">
     <div class="about-banner-wrap banner-space bg-img" data-bg="{% static 'assets/images/bg/home-infotechno-video-intro-bg.webp' %}">

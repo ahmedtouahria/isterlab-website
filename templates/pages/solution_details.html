@@ -2,6 +2,15 @@
 {% load static %}
 {% block breadcrumbs %}
 {% endblock breadcrumbs %}
+{% block styles %}
+<style>
+    h2{
+        padding-top:20px;
+        padding-bottom:20px;
+        font-size:30px;
+    }
+</style>
+{% endblock styles %}
 {% block content %}
 <div class="site-wrapper-reveal">
     <div class="about-banner-wrap banner-space bg-img" data-bg="{% static 'assets/images/bg/home-infotechno-video-intro-bg.webp' %}">
@@ -41,7 +50,7 @@
     <div class="accordion-wrapper section-space--pb_100">
         <div class="container">
             <div class="row ">
-                <div class="col-lg-6 pe-5">
+                <div class="col-lg-12 pe-5">
                     <div class="faq-two-wrapper section-space--mt_40">
                         <div id="accordion_two">
                             {% for item in solution.faqs.all %}
@@ -65,7 +74,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     {{solution.content | safe}}
                 </div>
             </div>

@@ -36,8 +36,13 @@ class BrandAdmin(ModelAdmin):
 class CovergeAdmin(ModelAdmin):
     model = Coverage
 
+class BlogAdmin(ModelAdmin):
+    model = Blog
+    list_display = ['title','created_at']
+
 admin.site.register(Solution,SolutionsAdmin)
 admin.site.register(Service,ServiceAdmin)
 admin.site.register(Coverage,CovergeAdmin)
 admin.site.register(Brand,BrandAdmin)
 admin.site.register(FAQ)
+admin.site.register(Blog,BlogAdmin)

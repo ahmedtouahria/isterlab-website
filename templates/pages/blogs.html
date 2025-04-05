@@ -14,13 +14,15 @@
     <div class="blog-pages-wrapper section-space--ptb_100">
         <div class="container">
             <div class="row">
+
+                {% for blog in blogs %}
                 <div class="col-lg-4 col-md-6  mb-30 wow move-up">
                     <!--======= Single Blog Item Start ========-->
                     <div class="single-blog-item blog-grid">
                         <!-- Post Feature Start -->
                         <div class="post-feature blog-thumbnail">
                             <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-01-370x230.webp' %}" loading="lazy" alt="Blog Images">
+                                <img class="img-fluid" src="{% if blog.image %}{{blog.image.url}}{% endif %}" loading="lazy" alt="Blog Images">
                             </a>
                         </div>
                         <!-- Post Feature End -->
@@ -30,19 +32,19 @@
                             <div class="post-meta">
                                 <div class="post-date">
                                     <span class="far fa-calendar meta-icon"></span>
-                                    January 14, 2019
+                                    {{blog.created_at | date}}
                                 </div>
                             </div>
 
                             <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">Ideas for High Returns on Investment</a>
+                                <a href="{% url "blog_details" blog.slug %}">{{blog.title}}</a>
                             </h5>
 
                             <div class="post-excerpt mt-15">
-                                <p>Using the profit accumulator is one such way, and you should understand why it increases your chances of the profits. …</p>
+                                <p>{{blog.description}}</p>
                             </div>
                             <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
+                                <a href="{% url "blog_details" blog.slug %}">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
                             </div>
                         </div>
                         <!-- Post info End -->
@@ -50,192 +52,8 @@
                     <!--===== Single Blog Item End =========-->
 
                 </div>
-
-                <div class="col-lg-4 col-md-6  mb-30 wow move-up">
-                    <!--======= Single Blog Item Start ========-->
-                    <div class="single-blog-item blog-grid">
-                        <!-- Post Feature Start -->
-                        <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-08-370x230.webp' %}" alt="Blog Images">
-                            </a>
-                        </div>
-                        <!-- Post Feature End -->
-
-                        <!-- Post info Start -->
-                        <div class="post-info lg-blog-post-info">
-                            <div class="post-meta">
-                                <div class="post-date">
-                                    <span class="far fa-calendar meta-icon"></span>
-                                    February 28, 2019
-                                </div>
-                            </div>
-
-                            <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">How Technology Made Businesses More Efficient</a>
-                            </h5>
-
-                            <div class="post-excerpt mt-15">
-                                <p>They play a role in making operations more seamless, bridging the gap between authorities, consumers and businesses. …</p>
-                            </div>
-                            <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- Post info End -->
-                    </div>
-                    <!--===== Single Blog Item End =========-->
-
-                </div>
-
-                <div class="col-lg-4 col-md-6  mb-30 wow move-up">
-                    <!--======= Single Blog Item Start ========-->
-                    <div class="single-blog-item blog-grid">
-                        <!-- Post Feature Start -->
-                        <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-07-370x230.webp' %}" alt="Blog Images">
-                            </a>
-                        </div>
-                        <!-- Post Feature End -->
-
-                        <!-- Post info Start -->
-                        <div class="post-info lg-blog-post-info">
-                            <div class="post-meta">
-                                <div class="post-date">
-                                    <span class="far fa-calendar meta-icon"></span>
-                                    February 28, 2019
-                                </div>
-                            </div>
-
-                            <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">Data Secure on Transitioning to a New Office</a>
-                            </h5>
-
-                            <div class="post-excerpt mt-15">
-                                <p>It is far wiser to do your own installations and ensure that all data flowing through the organization has end-to-end encryption. …</p>
-                            </div>
-                            <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- Post info End -->
-                    </div>
-                    <!--===== Single Blog Item End =========-->
-
-                </div>
-
-                <div class="col-lg-4 col-md-6  mb-30 wow move-up">
-                    <!--======= Single Blog Item Start ========-->
-                    <div class="single-blog-item blog-grid">
-                        <!-- Post Feature Start -->
-                        <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-07-370x230.webp' %}" alt="Blog Images">
-                            </a>
-                        </div>
-                        <!-- Post Feature End -->
-
-                        <!-- Post info Start -->
-                        <div class="post-info lg-blog-post-info">
-                            <div class="post-meta">
-                                <div class="post-date">
-                                    <span class="far fa-calendar meta-icon"></span>
-                                    February 28, 2019
-                                </div>
-                            </div>
-
-                            <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">The Keys to Persuading Customers Nowadays</a>
-                            </h5>
-
-                            <div class="post-excerpt mt-15">
-                                <p>It is far wiser to do your own installations and ensure that all data flowing through the organization has end-to-end encryption. …</p>
-                            </div>
-                            <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- Post info End -->
-                    </div>
-                    <!--===== Single Blog Item End =========-->
-
-                </div>
-
-                <div class="col-lg-4 col-md-6  mb-30 wow move-up">
-                    <!--======= Single Blog Item Start ========-->
-                    <div class="single-blog-item blog-grid">
-                        <!-- Post Feature Start -->
-                        <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-05-370x230.webp' %}" alt="Blog Images">
-                            </a>
-                        </div>
-                        <!-- Post Feature End -->
-
-                        <!-- Post info Start -->
-                        <div class="post-info lg-blog-post-info">
-                            <div class="post-meta">
-                                <div class="post-date">
-                                    <span class="far fa-calendar meta-icon"></span>
-                                    February 28, 2019
-                                </div>
-                            </div>
-
-                            <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">Blockchain Technology Effects on Logistics Sector?</a>
-                            </h5>
-
-                            <div class="post-excerpt mt-15">
-                                <p>Changing or adding information to the “chain” requires the authentication of everyone who is in the network. …</p>
-                            </div>
-                            <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- Post info End -->
-                    </div>
-                    <!--===== Single Blog Item End =========-->
-
-                </div>
-
-                <div class="col-lg-4 col-md-6  mb-30 wow move-up">
-                    <!--======= Single Blog Item Start ========-->
-                    <div class="single-blog-item blog-grid">
-                        <!-- Post Feature Start -->
-                        <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% static 'assets/images/blog/blog-02-370x230.webp' %}" alt="Blog Images">
-                            </a>
-                        </div>
-                        <!-- Post Feature End -->
-
-                        <!-- Post info Start -->
-                        <div class="post-info lg-blog-post-info">
-                            <div class="post-meta">
-                                <div class="post-date">
-                                    <span class="far fa-calendar meta-icon"></span>
-                                    February 28, 2019
-                                </div>
-                            </div>
-
-                            <h5 class="post-title font-weight--bold">
-                                <a href="blog-grid-classic.html#">How Wireless Technology is Changing Business</a>
-                            </h5>
-
-                            <div class="post-excerpt mt-15">
-                                <p>If there’s one way that wireless technology has changed the way we work, it’s that everyone is now connected. …</p>
-                            </div>
-                            <div class="btn-text">
-                                <a href="blog-grid-classic.html#">Read more <i class="ml-1 button-icon fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <!-- Post info End -->
-                    </div>
-                    <!--===== Single Blog Item End =========-->
-
-                </div>
-
+                {% endfor %}
+           
 
                 <div class="col-lg-12 wow move-up">
                     <div class="ht-pagination mt-30 pagination justify-content-center">

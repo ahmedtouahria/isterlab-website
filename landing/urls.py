@@ -12,6 +12,8 @@ urlpatterns = [
     path("contact/",contact,name="contact"),
     path("terms/",privacy_terms,name="privacy_terms"),
     path("blogs/",blogs,name="blogs"),
+    path("blogs/<slug:slug>/",blog_details,name="blog_details"),
+
 
 
     path("become-a-partner/",become_a_partner,name="become_a_partner"),

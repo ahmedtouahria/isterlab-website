@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block styles %}
+<style>
+        h2,h3{
+            padding-top:30px !important;
+            padding-bottom:20px !important;
+            font-size:30px !important;
+        }
+</style>
+{% endblock styles %}
+
+{% block breadcrumbs %}
+{% include "components/breadcrumbs.html" with section=blog.title %}
+{% endblock breadcrumbs %}
+{% block content %}
+<div class="site-wrapper-reveal">
+    <!--====================  Blog Area Start ====================-->
+    <div class="blog-pages-wrapper section-space--ptb_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Post Feature Start -->
+                    <div class="post-feature blog-thumbnail  wow move-up w-100">
+                        <img class="img-fluid w-100" src="{% if blog.image %}{{blog.image.url}}{% endif %}" alt="{{blog.title}}">
+                    </div>
+                    <!-- Post Feature End -->
+                </div>
+                <div class="col-lg-8 m-auto">
+                    <div class="main-blog-wrap">
+                        <!--======= Single Blog Item Start ========-->
+                        <div class="single-blog-item  wow move-up">
+
+                            <!-- Post info Start -->
+                            <div class="post-info lg-blog-post-info">
+                                <div class="post-categories text-center">
+                                    <a href="blog-post-no-sidebar.html#"> Success Story, Tips </a>
+                                </div>
+
+                                <h3 class="post-title text-center">
+                                    <a href="blog-post-no-sidebar.html#">{{blog.title}}</a>
+                                </h3>
+
+                                <div class="post-meta mt-20 justify-content-center">
+                                    <div class="post-author">
+                                        <a href="blog-post-no-sidebar.html#">
+                                            <img class="img-fluid avatar-96" src="assets/images/team/admin.webp" alt=""> {{blog.author}}
+                                        </a>
+                                    </div>
+                                    <div class="post-date">
+                                        <span class="far fa-calendar meta-icon"></span>
+                                        {{blog.created_at | date}}
+                                    </div>
+                                    <div class="post-view">
+                                        <span class="meta-icon far fa-eye"></span>
+                                        346 views
+                                    </div>
+                                </div>
+
+                               {{blog.content | safe}}
+
+                            </div>
+                            <!-- Post info End -->
+                        </div>
+                        <!--===== Single Blog Item End =========-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====================  Blog Area End  ====================-->
+
+
+
+
+    <!--========== Call to Action Area Start ============-->
+    <div class="cta-image-area_one section-space--ptb_80 cta-bg-image_one">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="cta-content md-text-center">
+                        <h3 class="heading text-white">Assess your business potentials and find opportunities <span class="text-color-secondary">for bigger success</span></h3>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="cta-button-group--one text-center">
+                        <a href="blog-post-no-sidebar.html#" class="btn btn--white btn-one"><span class="btn-icon me-2"><i class="far fa-comment-alt"></i></span> Let's talk</a>
+                        <a href="blog-post-no-sidebar.html#" class="btn btn--secondary  btn-two"><span class="btn-icon me-2"><i class="fas fa-info-circle"></i></span> Get info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--========== Call to Action Area End ============-->
+
+
+
+
+
+
+
+
+</div>
+{% endblock content %}

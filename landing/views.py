@@ -155,8 +155,19 @@ def become_a_partner(request):
 
 def blogs(request):
 
-    return render(request, 'pages/blogs.html')
+    context = {
+        "blogs":Blog.objects.all()
+    }
+    return render(request, 'pages/blogs.html',context)
 
+
+def blog_details(request,slug):
+
+    context = {
+    "blog":Blog.objects.get(slug=slug)
+    }
+
+    return render(request, 'pages/blog_details.html',context)
 def privacy_terms(request):
 
     return render(request, 'pages/terms_policy.html')

@@ -145,7 +145,7 @@ def become_a_partner(request):
                 subject = con_subject,
                 message = con_message,
                 company=con_company,
-                con_company_url = con_company_url,
+                company_url = con_company_url,
                 country = con_country,
                 state = con_state,
                 cv=cv

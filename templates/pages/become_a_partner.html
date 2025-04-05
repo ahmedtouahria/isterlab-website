@@ -31,9 +31,24 @@
                                     <div class="contact-inner">
                                         <input name="con_name" type="text" placeholder="Name *" required>
                                     </div>
-                           
+                               
                                     <div class="contact-inner">
                                         <input name="con_email" type="email" placeholder="Email *" required>
+                                    </div>
+                                </div>
+                                <div class="contact-input">
+                                    <div class="contact-inner">
+                                        <select name="con_country" id="country" required>
+                                            <option value="" disabled selected>Select Country *</option>
+                                            <!-- Countries will be populated by JavaScript -->
+                                        </select>
+                                    </div>
+                               
+                                    <div class="contact-inner">
+                                        <select name="con_state" id="state" required disabled>
+                                            <option value="" disabled selected>Select State *</option>
+                                            <!-- States will be populated based on country selection -->
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="contact-inner">
@@ -48,8 +63,8 @@
                                 <div class="contact-inner contact-message">
                                     <textarea name="con_message" placeholder="How can we collaborate?" required></textarea>
                                 </div>
-                                     <!-- Hidden reCAPTCHA Token Field -->
-                                     <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                                <!-- Hidden reCAPTCHA Token Field -->
+                                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                             
                                 <div class="submit-btn mt-20">
                                     <button class="ht-btn ht-btn-md" type="submit">Send message</button>
@@ -128,4 +143,73 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const countrySelect = document.getElementById('country');
+        const stateSelect = document.getElementById('state');
+        let countryData = [];
+    
+        // Load JSON file
+        fetch(' {% static "assets/countries.json" %}')  // Update this path to your JSON file location
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                countryData = data;
+                populateCountries();
+            })
+            .catch(error => {
+                console.error('Error loading country data:', error);
+                // Fallback: You could load a minimal set of countries here if the fetch fails
+            });
+    
+        function populateCountries() {
+            // Clear existing options except the first one
+            while (countrySelect.options.length > 1) {
+                countrySelect.remove(1);
+            }
+    
+            // Sort countries alphabetically
+            countryData.sort((a, b) => a.name.localeCompare(b.name));
+    
+            // Populate countries
+            countryData.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.name;
+                option.textContent = country.name;
+                countrySelect.appendChild(option);
+            });
+        }
+    
+        // Handle country change
+        countrySelect.addEventListener('change', function() {
+            const selectedCountry = countryData.find(c => c.name === this.value);
+            
+            // Clear previous states
+            stateSelect.innerHTML = '<option value="" disabled selected>Select State *</option>';
+            
+            if (selectedCountry && selectedCountry.states) {
+                // Enable state dropdown
+                stateSelect.disabled = false;
+                
+                // Sort states alphabetically
+                const sortedStates = [...selectedCountry.states].sort((a, b) => a.localeCompare(b));
+                
+                // Populate states
+                sortedStates.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            } else {
+                stateSelect.disabled = true;
+            }
+        });
+    });
+    </script>
 {% endblock js %}

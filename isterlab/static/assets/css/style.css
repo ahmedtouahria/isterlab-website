@@ -3581,7 +3581,7 @@ input[type=checkbox] {
   height: 100%;
   float: right;
   cursor: default;
-  background: #086AD8;
+  background: linear-gradient(205deg, #184d32, #2f3193);
   -webkit-transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
   -o-transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);

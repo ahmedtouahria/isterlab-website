@@ -122,7 +122,7 @@ def become_a_partner(request):
         con_company_url = request.POST.get('company_url')
         con_country = request.POST.get('con_country')
         con_state = request.POST.get('con_state')
-        cv = request.FILES.get('cv')
+        cv = request.FILES.get('con_cv')
 
         con_message = request.POST.get('con_message')
         recaptcha_response = request.POST.get('g-recaptcha-response')

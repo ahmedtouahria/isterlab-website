@@ -168,6 +168,8 @@ CONSTANCE_ADDITIONAL_FIELDS = {
 
 CONSTANCE_CONFIG={
     'WEBSITE_NAME': ("Isterlab", 'WEBSITE NAME'),
+    'WEBSITE_URL': ("https://isterlab.qateeb.com/", 'WEBSITE URL'),
+
     'LOGO': ("",'','image_field'),
     'PRIVACY': ("",'PRIVACY'),
     'BANNER': ("",'BANNER','image_field'),

@@ -40,9 +40,15 @@ class BlogAdmin(ModelAdmin):
     model = Blog
     list_display = ['title','created_at']
 
+class BecomepartnerAdmin(ModelAdmin):
+    model = ContactPartner
+    list_display = ['name','email','company','country','state']
+    list_filter = ['country','state']
+
 admin.site.register(Solution,SolutionsAdmin)
 admin.site.register(Service,ServiceAdmin)
 admin.site.register(Coverage,CovergeAdmin)
 admin.site.register(Brand,BrandAdmin)
 admin.site.register(FAQ)
 admin.site.register(Blog,BlogAdmin)
+admin.site.register(ContactPartner,BecomepartnerAdmin)

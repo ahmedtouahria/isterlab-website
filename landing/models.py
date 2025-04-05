@@ -121,12 +121,13 @@ class ContactPartner(models.Model):
     name = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
     company_url = models.CharField(max_length=255,blank=True, null=True)
-
+    country = models.CharField(max_length=255,blank=True, null=True)
+    state = models.CharField(max_length=255,blank=True, null=True)
     email = models.EmailField(max_length=255)
     subject = models.TextField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    
+    cv = models.FileField(upload_to="cvs", max_length=255,blank=True, null=True)
     def __str__(self):
         return self.name
 

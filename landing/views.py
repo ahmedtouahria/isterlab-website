@@ -120,6 +120,9 @@ def become_a_partner(request):
         con_subject = request.POST.get('con_subject')
         con_company = request.POST.get('company_name')
         con_company_url = request.POST.get('company_url')
+        con_country = request.POST.get('con_country')
+        con_state = request.POST.get('con_state')
+        cv = request.FILES.get('cv')
 
         con_message = request.POST.get('con_message')
         recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -142,7 +145,10 @@ def become_a_partner(request):
                 subject = con_subject,
                 message = con_message,
                 company=con_company,
-                con_company_url = con_company_url
+                con_company_url = con_company_url,
+                country = con_country,
+                state = con_state,
+                cv=cv
             )
             # reCAPTCHA passed, process the form (e.g., send email, save to DB)
             return render(request, 'pages/become_a_partner.html', {"message": "Your message has been sent successfully!"})

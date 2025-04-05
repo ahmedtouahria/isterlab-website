@@ -20,9 +20,9 @@
                             <!-- ht-box-icon Start -->
                             <div class="ht-box-images style-01">
                                 <div class="image-box-wrap">
-                                    <div class="box-image">
+                                    <a href = "{% url "service_details" service.name %}" class="box-image">
                                         <img loading="lazy"class="img-fulid" src="{{service.icon.url}}" alt="">
-                                    </div>
+                                    </a>
                                     <div class="content">
                                         <h5 class="heading">{{service.name}}</h5>
                                         <div class="text">{{service.short_description | slice:150}}...</div>

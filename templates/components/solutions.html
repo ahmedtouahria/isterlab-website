@@ -8,9 +8,9 @@
                     <!-- ht-box-icon Start -->
                     <div class="ht-box-images style-09">
                         <div class="image-box-wrap">
-                            <div class="box-image">
+                            <a href = "{% url "solution_details" solution.name %}" class="box-image">
                                 <img loading="lazy"src=" {% if solution.icon %}{{solution.icon.url}}{% endif %} " class="img-fluid" alt="">
-                            </div>
+                            </a>
                             <div class="content">
                                 <h6 class="heading">{{solution.name}}</h6>
                                 <div class="text">{{solution.short_description}}</div>

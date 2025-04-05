@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from ckeditor.fields import RichTextField
 
-
+from django.template.defaultfilters import slugify
 
 class Project(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
@@ -50,7 +50,7 @@ class Service(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug is None:
-            self.slug = self.name.replace(" ","-").lower()
+            self.slug = slugify(self.name)
 
         super(Service, self).save(*args, **kwargs) # Call the real save() method
 
@@ -74,7 +74,7 @@ class Solution(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug is None:
-            self.slug = self.name.replace(" ","-").lower()
+            self.slug = slugify(self.name)
         super(Solution, self).save(*args, **kwargs) # Call the real save() method
 
 class SolutionFAQ(models.Model):
@@ -152,5 +152,5 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         if self.slug is None:
-            self.slug = self.title.replace(" ","-").lower()
+            self.slug = slugify(self.title)
         super(Blog, self).save(*args, **kwargs) # Call the real save() method

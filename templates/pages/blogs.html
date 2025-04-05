@@ -5,11 +5,6 @@
 {% endblock breadcrumbs %}
 {% block content %}
 <div class="site-wrapper-reveal">
-
-
-
-
-
     <!--====================  Blog Area Start ====================-->
     <div class="blog-pages-wrapper section-space--ptb_100">
         <div class="container">
@@ -21,8 +16,8 @@
                     <div class="single-blog-item blog-grid">
                         <!-- Post Feature Start -->
                         <div class="post-feature blog-thumbnail">
-                            <a href="blog-post-layout-one.html">
-                                <img class="img-fluid" src="{% if blog.image %}{{blog.image.url}}{% endif %}" loading="lazy" alt="Blog Images">
+                            <a href="{% url "blog_details" blog.slug %}">
+                                <img class="img-fluid" src="{% if blog.image %}{{blog.image.url}}{% endif %}" loading="lazy" alt={{blog.title}}">
                             </a>
                         </div>
                         <!-- Post Feature End -->
@@ -55,20 +50,7 @@
                 {% endfor %}
            
 
-                <div class="col-lg-12 wow move-up">
-                    <div class="ht-pagination mt-30 pagination justify-content-center">
-                        <div class="pagination-wrapper">
-
-                            <ul class="page-pagination">
-                                <li><a class="prev page-numbers" href="blog-grid-classic.html#">Prev</a></li>
-                                <li><a class="page-numbers current" href="blog-grid-classic.html#">1</a></li>
-                                <li><a class="page-numbers" href="blog-grid-classic.html#">2</a></li>
-                                <li><a class="next page-numbers" href="blog-grid-classic.html#">Next</a></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
+        {% comment %}  {% include "components/pagination.html" %} {% endcomment %}
 
             </div>
         </div>

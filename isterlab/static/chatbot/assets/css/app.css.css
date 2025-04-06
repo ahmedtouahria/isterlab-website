@@ -970,16 +970,15 @@ dl {
 .tyn-reply-bubble {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   width: max-content;
   max-width: 100%;
+  flex-direction: column;
 }
 .outgoing .tyn-reply-bubble {
   flex-direction: row-reverse;
 }
-.tyn-reply-bubble > *:first-child:not(:only-child) {
-  max-width: calc(100% - 0.75rem - var(--bs-size-sm) * 2);
-}
+
 .tyn-reply-text {
   font-size: 0.833rem;
   padding: 0.75rem 1rem;

@@ -21,159 +21,379 @@
     <div class="tyn-quick-chat-reply js-scroll-to-end">
         <div class="tyn-reply tyn-reply-quick" id="tynReply">
             <div class="tyn-reply-item incoming">
-                <div class="tyn-reply-avatar">
-                    <div class="tyn-media tyn-size-md tyn-circle">
-                        <img src="{% static 'chatbot/assets/images/avatar/bot-1.jpg' %}" alt="">
-                    </div>
-                </div><!-- .tyn-reply-avatar -->
-                <div class="tyn-reply-group">
-                    <div class="tyn-reply-bubble">
-                        <div class="tyn-reply-text">  Hello! I'm the Isterlab agent, here to assist you with any inquiries you might have about our services, products, or any other information related to Isterlab Global. Whether you're looking for details on our laboratory solutions, need help navigating our website, or have specific questions about our offerings, feel free to ask. I'm here to help you make the most of your experience with us. How can I assist you today? </div>
-                    </div><!-- .tyn-reply-bubble -->
-                </div><!-- .tyn-reply-group -->
+
             </div>
-            
-            <!-- .tyn-reply-item -->
         </div><!-- .tyn-reply -->
     </div><!-- .tyn-quick-chat-reply -->
-
 </div><!-- .tyn-quick-chat-box -->
-<div class="tyn-quick-chat-form">
-    <div class="tyn-chat-form-input bg-light" id="tynChatInput" contenteditable></div>
-    <ul class="tyn-list-inline me-n2 my-1">
-        <li><button class="btn btn-icon btn-white btn-sm btn-pill " id="tynChatSend">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
-                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
-                </svg><!-- send-fill -->
-            </button></li>
-    </ul><!-- .tyn-list-inline -->
-</div><!-- .tyn-quick-chat-form -->
 
 {% endblock content %}
 
 {% block js %}
 <script>
-    function initializeChat() {
-        let chatSend = document.querySelector('#tynChatSend');
-        let chatInput = document.querySelector('#tynChatInput');
-        let chatReply = document.querySelector('#tynReply');
-        let chatBody = document.querySelector('#tynChatBody');
+// Global variable to track conversation state
+let currentCategoryId = null;
+let conversationHistory = [];
+
+function initializeChat() {
+    // Load initial menu
+    loadConversationFlow('init');
     
-        let socket = createWebSocket();
+    // Handle button clicks
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('option-btn')) {
+            const optionType = e.target.getAttribute('data-option-type');
+            const optionId = e.target.getAttribute('data-option-id');
+            const optionValue = e.target.getAttribute('data-option-value');
+            
+            handleOptionSelection(optionType, optionId, optionValue, e.target.textContent);
+        }
+    });
+}
+
+function handleOptionSelection(type, id, value, text) {
+    const chatReply = document.querySelector('#tynReply');
     
-        chatSend && chatSend.addEventListener("click", function(event) {
-            event.preventDefault();
-            handleSendMessage(socket);
+    // Add user's selection to chat
+    appendMessage(text, true);
+    
+    // Track navigation history
+    if (type === 'category') {
+        conversationHistory.push({
+            type: 'category',
+            id: id,
+            parentId: currentCategoryId
         });
-    
-        chatInput && chatInput.addEventListener("keypress", function(event) {
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                chatSend.click();
-            }
-        });
-    }
-    
-    function createWebSocket() {
-        let protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        let host = window.location.host;  // includes domain + port
-        let socket = new WebSocket(protocol + host + "/ws/chat/");    
-        socket.onopen = function() {
-            console.log("✅ Connected to WebSocket");
-        };
-    
-        socket.onmessage = function(event) {
-            let data = JSON.parse(event.data);
-            if (data.type === "chat.message") {
-                removeTypingIndicator();
-                typeMessage(data.message);
-            }
-        };
-    
-        socket.onerror = function(error) {
-            console.error("❌ WebSocket Error:", error);
-        };
-    
-        socket.onclose = function(event) {
-            console.warn("⚠️ WebSocket Disconnected. Reconnecting in 3 seconds...", event);
-            setTimeout(() => {
-                createWebSocket(); // Auto-reconnect
-            }, 3000);
-        };
-    
-        return socket;
-    }
-    
-    function handleSendMessage(socket) {
-        let chatInput = document.querySelector('#tynChatInput');
-        let getInput = chatInput.innerText.trim();
-    
-        if (getInput === "") return;
-    
-        appendMessage(getInput, true);
-        chatInput.innerHTML = "";
-        scrollToBottom();
-    
-        let messageData = {
-            "type": "chat.message",
-            "message": getInput
-        };
-    
-        if (socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify(messageData));
-            showTypingIndicator();
+        currentCategoryId = id;
+    } else if (type === 'back') {
+        if (value) {
+            currentCategoryId = value;
         } else {
-            socket = createWebSocket()
-            console.warn("⚠️ Message not sent. WebSocket is not connected.");
-            handleSendMessage(socket) 
+            currentCategoryId = null; // Return to main menu
         }
     }
     
-    function appendMessage(message, isUser) {
-        let chatReply = document.querySelector('#tynReply');
-        let chatBubble = `
-            <div class="tyn-reply-bubble">
-                <div class="tyn-reply-text">${message}</div>
-            </div>
-        `;
+    // Show typing indicator
+    showTypingIndicator();
     
-        let outgoingWrapper = `<div class="tyn-reply-item ${isUser ? 'outgoing' : 'incoming'}">
-            ${!isUser ? `<div class="tyn-reply-avatar">
+    // Simulate API call delay
+    setTimeout(() => {
+        removeTypingIndicator();
+        
+        if (type === 'back') {
+            // Handle back navigation
+            if (value) {
+                loadConversationFlow(`category_${value}`);
+            } else {
+                loadConversationFlow('init');
+            }
+        } else if (type === 'response') {
+            // Handle response display
+            displayResponse(id);
+        } else {
+            // Load the selected category
+            loadConversationFlow(`category_${id}`);
+        }
+        
+        scrollToBottom();
+    }, 800);
+}
+
+function loadConversationFlow(flowKey) {
+    // In a real implementation, this would fetch from your Django endpoint
+    // For now we'll assume conversationFlow is loaded from the backend
+    const flow = conversationFlow[flowKey];
+    
+    if (!flow) {
+        console.error('Flow not found:', flowKey);
+        return;
+    }
+    
+    appendBotResponse(flow.message, flow.options);
+}
+
+function displayResponse(responseId) {
+    // In a real implementation, fetch the full response from your Django endpoint
+    const response = {
+        id: responseId,
+        text: "This would be the detailed response from your database",
+        blogs: [] // Would be populated from Response.blogs in your Django model
+    };
+    
+    const chatReply = document.querySelector('#tynReply');
+    
+    const responseHtml = `
+        <div class="tyn-reply-item incoming">
+            <div class="tyn-reply-avatar">
+                <div class="tyn-media tyn-size-md tyn-circle">
+                    <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
+                </div>
+            </div>
+            <div class="tyn-reply-group">
+                <div class="tyn-reply-bubble">
+                    <div class="tyn-reply-text">${response.text}</div>
+                    ${response.blogs && response.blogs.length > 0 ? 
+                        `<div class="mt-3">
+                            <h6>Related Resources:</h6>
+                            <ul class="list-unstyled">
+                                ${response.blogs.map(blog => 
+                                    `<li><a href="${blog.url}" target="_blank">${blog.title}</a></li>`
+                                ).join('')}
+                            </ul>
+                        </div>` 
+                        : ''}
+                    <div class="tyn-button-group mt-2">
+                        <button class="btn btn-sm btn-outline-primary btn-pill option-btn" 
+                                data-option-type="back" 
+                                data-option-id="${responseId}"
+                                data-option-value="${currentCategoryId}">
+                            ← Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    chatReply.insertAdjacentHTML('beforeend', responseHtml);
+}
+
+function appendMessage(message, isUser) {
+    const chatReply = document.querySelector('#tynReply');
+    const messageClass = isUser ? 'outgoing' : 'incoming';
+    
+    const messageHtml = `
+        <div class="tyn-reply-item ${messageClass}">
+            ${!isUser ? `
+            <div class="tyn-reply-avatar">
                 <div class="tyn-media tyn-size-md tyn-circle">
                     <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
                 </div>
             </div>` : ''}
-            <div class="tyn-reply-group"></div>
-        </div>`;
+            <div class="tyn-reply-group">
+                <div class="tyn-reply-bubble">
+                    <div class="tyn-reply-text">${message}</div>
+                </div>
+            </div>
+        </div>
+    `;
     
-        if (!chatReply.querySelector('.tyn-reply-item:last-child') || 
-            !chatReply.querySelector('.tyn-reply-item:last-child').classList.contains(isUser ? 'outgoing' : 'incoming')) {
-            chatReply.insertAdjacentHTML("beforeend", outgoingWrapper);
+    chatReply.insertAdjacentHTML('beforeend', messageHtml);
+}
+
+function appendBotResponse(message, options) {
+    const chatReply = document.querySelector('#tynReply');
+    
+    let buttonsHtml = '';
+    for (const [value, option] of Object.entries(options)) {
+        if (value === 'back') {
+            buttonsHtml += `
+                <button class="btn btn-sm btn-outline-secondary btn-pill option-btn" 
+                        data-option-type="back" 
+                        data-option-id="${option.target || ''}"
+                        data-option-value="${option.target || ''}">
+                    ${option.text}
+                </button>
+            `;
+        } else {
+            buttonsHtml += `
+                <button class="btn btn-sm btn-outline-primary btn-pill option-btn" 
+                        data-option-type="${option.type || 'category'}" 
+                        data-option-id="${option.id || value.split('_')[1]}"
+                        data-option-value="${value}">
+                    ${option.text || option}
+                </button>
+            `;
         }
-    
-        let replyGroup = chatReply.querySelector('.tyn-reply-item:last-child .tyn-reply-group');
-        replyGroup.insertAdjacentHTML("beforeend", chatBubble);
-        return replyGroup.querySelector('.tyn-reply-bubble .tyn-reply-text');
     }
     
-    function typeMessage(message) {
-        let textElement = appendMessage("", false);
-        let index = 0;
+    const responseHtml = `
+        <div class="tyn-reply-item incoming">
+            <div class="tyn-reply-avatar">
+                <div class="tyn-media tyn-size-md tyn-circle">
+                    <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
+                </div>
+            </div>
+            <div class="tyn-reply-group">
+                <div class="tyn-reply-bubble">
+                    <div class="tyn-reply-text">${message}</div>
+                    <div class="tyn-button-group mt-2">${buttonsHtml}</div>
+                </div>
+            </div>
+        </div>
+    `;
     
-        function typeChar() {
-            if (index < message.length) {
-                textElement.innerHTML += message.charAt(index);
-                index++;
-                setTimeout(typeChar, 30);
+    chatReply.insertAdjacentHTML('beforeend', responseHtml);
+}
+
+// Keep your existing helper functions:
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Get conversation flow from Django template context
+    const conversationFlow = {
+        "init": {
+          "message": "Welcome to Isterlab IT Solutions! How can we help you today?",
+          "options": {
+            "services": {
+              "text": "Our Services",
+              "type": "category",
+              "id": 1
+            },
+            "products": {
+              "text": "Our Products",
+              "type": "category",
+              "id": 2
+            },
+            "support": {
+              "text": "Get Support",
+              "type": "category",
+              "id": 3
+            },
+            "emergency": {
+              "text": "⚠️ Emergency Support",
+              "type": "response",
+              "id": 99
             }
+          }
+        },
+        "category_1": {
+          "message": "We offer these IT services:",
+          "options": {
+            "project_management": {
+              "text": "IT Project Management",
+              "type": "response",
+              "id": 101,
+              "blogs": [
+                {
+                  "id": 201,
+                  "title": "Best Practices in IT Project Management",
+                  "url": "/blog/201"
+                }
+              ]
+            },
+            "cloud_services": {
+              "text": "Cloud Services",
+              "type": "category",
+              "id": 11
+            },
+            "back": {
+              "text": "← Main Menu",
+              "type": "back",
+              "target": null
+            }
+          }
+        },
+        "category_11": {
+          "message": "Our cloud computing services include:",
+          "options": {
+            "migration": {
+              "text": "Cloud Migration",
+              "type": "response",
+              "id": 111
+            },
+            "management": {
+              "text": "Cloud Management",
+              "type": "response",
+              "id": 112
+            },
+            "back": {
+              "text": "← Back to Services",
+              "type": "back",
+              "target": 1
+            }
+          }
+        },
+        "category_2": {
+          "message": "Our product categories:",
+          "options": {
+            "software": {
+              "text": "Software Solutions",
+              "type": "category",
+              "id": 21
+            },
+            "hardware": {
+              "text": "Hardware Equipment",
+              "type": "response",
+              "id": 102
+            },
+            "back": {
+              "text": "← Main Menu",
+              "type": "back",
+              "target": null
+            }
+          }
+        },
+        "category_3": {
+          "message": "Support options:",
+          "options": {
+            "technical": {
+              "text": "Technical Support",
+              "type": "response",
+              "id": 103
+            },
+            "account": {
+              "text": "Account Help",
+              "type": "response",
+              "id": 104
+            },
+            "back": {
+              "text": "← Main Menu",
+              "type": "back",
+              "target": null
+            }
+          }
+        },
+        "response_99": {
+          "message": "For emergency support, please call our 24/7 hotline: +1 (555) 123-4567. Our team will respond immediately.",
+          "options": {
+            "back": {
+              "text": "← Main Menu",
+              "type": "back",
+              "target": null
+            }
+          }
+        },
+        "response_101": {
+          "message": "Our IT Project Management service provides end-to-end solutions for your technology initiatives, with guaranteed SLA compliance and expert project leadership.",
+          "options": {
+            "contact": {
+              "text": "Contact Sales",
+              "type": "response",
+              "id": 105
+            },
+            "back": {
+              "text": "← Back to Services",
+              "type": "back",
+              "target": 1
+            }
+          }
+        },
+        "response_105": {
+          "message": "Our sales team will contact you within 1 business day. Please provide your email: [form input would go here]",
+          "options": {
+            "back": {
+              "text": "← Back",
+              "type": "back",
+              "target": 1
+            }
+          }
         }
-        typeChar();
-        scrollToBottom();
-    }
+      }
     
+    // Initialize chat with the preloaded flow
+    window.conversationFlow = conversationFlow;
+    initializeChat();
+    
+    // Error handling for template context
+    if (!conversationFlow || Object.keys(conversationFlow).length === 0) {
+        console.error('Conversation flow not properly initialized');
+        appendMessage("We're having technical difficulties. Please refresh the page.", false);
+    }
+});
+
     function showTypingIndicator() {
-        let chatReply = document.querySelector('#tynReply');
-        let typingIndicator = `
+        const chatReply = document.querySelector('#tynReply');
+        const typingHtml = `
             <div class="tyn-reply-item incoming typing-indicator">
                 <div class="tyn-reply-avatar">
                     <div class="tyn-media tyn-size-md tyn-circle">
@@ -187,21 +407,41 @@
                 </div>
             </div>
         `;
-        chatReply.insertAdjacentHTML("beforeend", typingIndicator);
+        chatReply.insertAdjacentHTML('beforeend', typingHtml);
     }
-    
+
     function removeTypingIndicator() {
-        let typingBubble = document.querySelector('.typing-indicator');
-        if (typingBubble) {
-            typingBubble.remove();
+        const typingIndicator = document.querySelector('.typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
         }
     }
-    
+
     function scrollToBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     }
-    
-    document.addEventListener("DOMContentLoaded", initializeChat);
-    
+
 </script>
+
+<style>
+    .tyn-button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+    
+    .tyn-reply-bubble {
+        max-width: 80%;
+    }
+    
+    .option-btn {
+        transition: all 0.2s ease;
+    }
+    
+    .option-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+</style>
 {% endblock js %}

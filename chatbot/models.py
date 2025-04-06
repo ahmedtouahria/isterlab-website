@@ -1,7 +1,11 @@
 from django.db import models
+from landing.models import Blog
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    message = models.TextField(blank=True, null=True)
     parent = models.ForeignKey(
         'self', null=True, blank=True, 
         on_delete=models.CASCADE, related_name='subcategories'
@@ -13,11 +17,11 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "Categories"
 
-class Inquiry(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="inquiries")
-    user_message = models.TextField()
-    response = models.TextField(blank=True, null=True)
+class Response(models.Model):
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="responses")
+    response = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
+    blogs = models.ManyToManyField(Blog,related_name="blogs",blank=True, null=True)
     def __str__(self):
-        return f"Inquiry about {self.category.name}"
+        return self.response
+    

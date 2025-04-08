@@ -17,96 +17,103 @@
 {% block js %}
 <script>
 // Global variable to track conversation state
-let currentCategoryId = null;
-let conversationHistory = [];
+let currentState = 'init';
+const chatHistory = [];
 
+// Initialize chat with proper JSON parsing
 function initializeChat() {
-    // Load initial menu
-    loadConversationFlow('init');
-    
+    try {
+
+        // Load initial state
+        loadState('init');
+        
+        // Setup event listeners
+        setupEventListeners();
+        
+    } catch (error) {
+        console.error('Chat initialization failed:', error);
+        showErrorMessage();
+    }
+}
+
+function setupEventListeners() {
     // Handle button clicks
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('option-btn')) {
-            const optionType = e.target.getAttribute('data-option-type');
-            const optionId = e.target.getAttribute('data-option-id');
-            const optionValue = e.target.getAttribute('data-option-value');
+            const optionType = e.target.dataset.optionType;
+            const optionTarget = e.target.dataset.optionTarget;
+            const optionValue = e.target.dataset.optionValue;
             
-            handleOptionSelection(optionType, optionId, optionValue, e.target.textContent);
+            handleOptionClick(optionType, optionTarget, optionValue, e.target.textContent);
+        }
+    });
+    
+    // Handle back button
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('chat-back-btn')) {
+            navigateBack();
         }
     });
 }
 
-function handleOptionSelection(type, id, value, text) {
-    const chatReply = document.querySelector('#tynReply');
+function handleOptionClick(type, target, value, displayText) {
+    // Add user message to chat
+    appendMessage(displayText, true);
     
-    // Add user's selection to chat
-    appendMessage(text, true);
-    
-    // Track navigation history
-    if (type === 'category') {
-        conversationHistory.push({
-            type: 'category',
-            id: id,
-            parentId: currentCategoryId
-        });
-        currentCategoryId = id;
-    } else if (type === 'back') {
-        if (value) {
-            currentCategoryId = value;
-        } else {
-            currentCategoryId = null; // Return to main menu
-        }
-    }
+    // Update chat history
+    chatHistory.push(currentState);
     
     // Show typing indicator
     showTypingIndicator();
     
-    // Simulate API call delay
+    // Process after short delay for better UX
     setTimeout(() => {
         removeTypingIndicator();
         
-        if (type === 'back') {
-            // Handle back navigation
-            if (value) {
-                loadConversationFlow(`category_${value}`);
-            } else {
-                loadConversationFlow('init');
-            }
-        } else if (type === 'response') {
-            // Handle response display
-            displayResponse(id);
-        } else {
-            // Load the selected category
-            loadConversationFlow(`category_${id}`);
+        switch (type) {
+            case 'category':
+                loadState(target);
+                break;
+                
+            case 'url':
+                window.open(value || target, '_blank');
+                navigateBack();
+                break;
+                
+            case 'form':
+                showForm(target);
+                break;
+                
+            case 'response':
+                showResponse(target, value);
+                break;
+                
+            case 'back':
+                navigateTo(target || 'init');
+                break;
+                
+            default:
+                console.warn('Unknown option type:', type);
+                loadState('init');
         }
         
         scrollToBottom();
     }, 800);
 }
 
-function loadConversationFlow(flowKey) {
-    // In a real implementation, this would fetch from your Django endpoint
-    // For now we'll assume conversationFlow is loaded from the backend
-    const flow = conversationFlow[flowKey];
-    
-    if (!flow) {
-        console.error('Flow not found:', flowKey);
+function loadState(stateKey) {
+    const state = window.conversationFlow[stateKey];
+    if (!state) {
+        console.error('State not found:', stateKey);
+        loadState('init');
         return;
     }
     
-    appendBotResponse(flow.message, flow.options);
+    currentState = stateKey;
+    appendBotResponse(state.message, state.options);
 }
 
-function displayResponse(responseId) {
-    // In a real implementation, fetch the full response from your Django endpoint
-    const response = {
-        id: responseId,
-        text: "This would be the detailed response from your database",
-        blogs: [] // Would be populated from Response.blogs in your Django model
-    };
-    
-    const chatReply = document.querySelector('#tynReply');
-    
+function showResponse(responseId, responseText) {
     const responseHtml = `
         <div class="tyn-reply-item incoming">
             <div class="tyn-reply-avatar">
@@ -116,45 +123,45 @@ function displayResponse(responseId) {
             </div>
             <div class="tyn-reply-group">
                 <div class="tyn-reply-bubble">
-                    <div class="tyn-reply-text">${response.text}</div>
-                    ${response.blogs && response.blogs.length > 0 ? 
-                        `<div class="mt-3">
-                            <h6>Related Resources:</h6>
-                            <ul class="list-unstyled">
-                                ${response.blogs.map(blog => 
-                                    `<li><a href="${blog.url}" target="_blank">${blog.title}</a></li>`
-                                ).join('')}
-                            </ul>
-                        </div>` 
-                        : ''}
-                    <div class="tyn-button-group mt-2">
-                        <button class="btn btn-sm btn-outline-primary btn-pill option-btn" 
-                                data-option-type="back" 
-                                data-option-id="${responseId}"
-                                data-option-value="${currentCategoryId}">
-                            ← Back
-                        </button>
-                    </div>
+                    <div class="tyn-reply-text">${responseText || 'Response not available'}</div>
+                    <button class="btn btn-sm btn-outline-secondary chat-back-btn mt-2">
+                        ← Back
+                    </button>
                 </div>
             </div>
         </div>
     `;
     
-    chatReply.insertAdjacentHTML('beforeend', responseHtml);
+    document.querySelector('#tynReply').insertAdjacentHTML('beforeend', responseHtml);
+}
+
+function navigateTo(stateKey) {
+    currentState = stateKey;
+    loadState(stateKey);
+}
+
+function navigateBack() {
+    if (chatHistory.length > 0) {
+        const previousState = chatHistory.pop();
+        navigateTo(previousState);
+    } else {
+        navigateTo('init');
+    }
 }
 
 function appendMessage(message, isUser) {
-    const chatReply = document.querySelector('#tynReply');
     const messageClass = isUser ? 'outgoing' : 'incoming';
+    const avatarHtml = isUser ? '' : `
+        <div class="tyn-reply-avatar">
+            <div class="tyn-media tyn-size-md tyn-circle">
+                <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
+            </div>
+        </div>
+    `;
     
     const messageHtml = `
         <div class="tyn-reply-item ${messageClass}">
-            ${!isUser ? `
-            <div class="tyn-reply-avatar">
-                <div class="tyn-media tyn-size-md tyn-circle">
-                    <img src="/static/chatbot/assets/images/avatar/bot-1.jpg" alt="">
-                </div>
-            </div>` : ''}
+            ${avatarHtml}
             <div class="tyn-reply-group">
                 <div class="tyn-reply-bubble">
                     <div class="tyn-reply-text">${message}</div>
@@ -163,33 +170,24 @@ function appendMessage(message, isUser) {
         </div>
     `;
     
-    chatReply.insertAdjacentHTML('beforeend', messageHtml);
+    document.querySelector('#tynReply').insertAdjacentHTML('beforeend', messageHtml);
 }
 
 function appendBotResponse(message, options) {
-    const chatReply = document.querySelector('#tynReply');
-    
     let buttonsHtml = '';
-    for (const [value, option] of Object.entries(options)) {
-        if (value === 'back') {
-            buttonsHtml += `
-                <button class="btn btn-sm btn-outline-secondary btn-pill option-btn" 
-                        data-option-type="back" 
-                        data-option-id="${option.target || ''}"
-                        data-option-value="${option.target || ''}">
-                    ${option.text}
-                </button>
-            `;
-        } else {
-            buttonsHtml += `
-                <button class="btn btn-sm btn-outline-primary btn-pill option-btn" 
-                        data-option-type="${option.type || 'category'}" 
-                        data-option-id="${option.id || value.split('_')[1]}"
-                        data-option-value="${value}">
-                    ${option.text || option}
-                </button>
-            `;
-        }
+    
+    for (const [key, option] of Object.entries(options)) {
+        const btnClass = option.type === 'back' ? 
+            'btn-outline-secondary' : 'btn-outline-primary';
+        
+        buttonsHtml += `
+            <button class="btn btn-sm ${btnClass} btn-pill option-btn"
+                    data-option-type="${option.type}"
+                    data-option-target="${key}"
+                    data-option-value="${option.url || option.target || ''}">
+                ${option.text}
+            </button>
+        `;
     }
     
     const responseHtml = `
@@ -208,162 +206,13 @@ function appendBotResponse(message, options) {
         </div>
     `;
     
-    chatReply.insertAdjacentHTML('beforeend', responseHtml);
+    document.querySelector('#tynReply').insertAdjacentHTML('beforeend', responseHtml);
 }
-
 // Keep your existing helper functions:
 
 document.addEventListener("DOMContentLoaded", function() {
     // Get conversation flow from Django template context
-    const conversationFlow = {
-        "init": {
-          "message": "Welcome to Isterlab IT Solutions! How can we help you today?",
-          "options": {
-            "services": {
-              "text": "Our Services",
-              "type": "category",
-              "id": 1
-            },
-            "products": {
-              "text": "Our Products",
-              "type": "category",
-              "id": 2
-            },
-            "support": {
-              "text": "Get Support",
-              "type": "category",
-              "id": 3
-            },
-            "emergency": {
-              "text": "⚠️ Emergency Support",
-              "type": "response",
-              "id": 99
-            }
-          }
-        },
-        "category_1": {
-          "message": "We offer these IT services:",
-          "options": {
-            "project_management": {
-              "text": "IT Project Management",
-              "type": "response",
-              "id": 101,
-              "blogs": [
-                {
-                  "id": 201,
-                  "title": "Best Practices in IT Project Management",
-                  "url": "/blog/201"
-                }
-              ]
-            },
-            "cloud_services": {
-              "text": "Cloud Services",
-              "type": "category",
-              "id": 11
-            },
-            "back": {
-              "text": "← Main Menu",
-              "type": "back",
-              "target": null
-            }
-          }
-        },
-        "category_11": {
-          "message": "Our cloud computing services include:",
-          "options": {
-            "migration": {
-              "text": "Cloud Migration",
-              "type": "response",
-              "id": 111
-            },
-            "management": {
-              "text": "Cloud Management",
-              "type": "response",
-              "id": 112
-            },
-            "back": {
-              "text": "← Back to Services",
-              "type": "back",
-              "target": 1
-            }
-          }
-        },
-        "category_2": {
-          "message": "Our product categories:",
-          "options": {
-            "software": {
-              "text": "Software Solutions",
-              "type": "category",
-              "id": 21
-            },
-            "hardware": {
-              "text": "Hardware Equipment",
-              "type": "response",
-              "id": 102
-            },
-            "back": {
-              "text": "← Main Menu",
-              "type": "back",
-              "target": null
-            }
-          }
-        },
-        "category_3": {
-          "message": "Support options:",
-          "options": {
-            "technical": {
-              "text": "Technical Support",
-              "type": "response",
-              "id": 103
-            },
-            "account": {
-              "text": "Account Help",
-              "type": "response",
-              "id": 104
-            },
-            "back": {
-              "text": "← Main Menu",
-              "type": "back",
-              "target": null
-            }
-          }
-        },
-        "response_99": {
-          "message": "For emergency support, please call our 24/7 hotline: +1 (555) 123-4567. Our team will respond immediately.",
-          "options": {
-            "back": {
-              "text": "← Main Menu",
-              "type": "back",
-              "target": null
-            }
-          }
-        },
-        "response_101": {
-          "message": "Our IT Project Management service provides end-to-end solutions for your technology initiatives, with guaranteed SLA compliance and expert project leadership.",
-          "options": {
-            "contact": {
-              "text": "Contact Sales",
-              "type": "response",
-              "id": 105
-            },
-            "back": {
-              "text": "← Back to Services",
-              "type": "back",
-              "target": 1
-            }
-          }
-        },
-        "response_105": {
-          "message": "Our sales team will contact you within 1 business day. Please provide your email: [form input would go here]",
-          "options": {
-            "back": {
-              "text": "← Back",
-              "type": "back",
-              "target": 1
-            }
-          }
-        }
-      }
+    const conversationFlow = {{ conversation_flow_json|safe }}
     
     // Initialize chat with the preloaded flow
     window.conversationFlow = conversationFlow;
@@ -405,7 +254,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function scrollToBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     }
-
+    function showErrorMessage() {
+        appendMessage("We're having trouble loading the chat. Please try again later.", false);
+    }
 </script>
 
 <style>

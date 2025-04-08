@@ -7,11 +7,11 @@
 <meta property="og:title" content="{{ config.WEBSITE_NAME }} - {{blog.title}}">
 <meta property="og:description" content="{{blog.description}}">
 <meta property="og:url" content="https://isterlab.qateeb.com{{request.get_full_path}}">
-<meta property="og:image" content="{% if blog.image %}{{blog.image.url}}{% else %}https://isterlab.qateeb.com/media/{{config.BANNER}}{% endif %}">
+<meta property="og:image" content="{% if blog.image %}{{blog.image.url}}{% else %}/media/{{config.BANNER}}{% endif %}">
 <meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
 <meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - {{blog.title}}">
 <meta name="twitter:description" content="{{blog.description}}">
-<meta name="twitter:image" content="{% if blog.image %}{{blog.image.url}}{% else %}https://isterlab.qateeb.com/media/{{config.BANNER}}{% endif %}">
+<meta name="twitter:image" content="{% if blog.image %}{{blog.image.url}}{% else %}/media/{{config.BANNER}}{% endif %}">
 <link rel="canonical" href="https://isterlab.qateeb.com{{request.get_full_path}}">
 
 

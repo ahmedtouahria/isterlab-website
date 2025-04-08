@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block meta %}
+
+<title>{{ config.WEBSITE_NAME }} - Solutions</title>
+<meta name="description" content="{{config.DESCRIPTION}}">
+<meta property="og:title" content="{{ config.WEBSITE_NAME }} - {{service.name}}">
+<meta property="og:description" content="Solutions">
+<meta property="og:url" content="https://isterlab.qateeb.com{{request.get_full_path}}">
+<meta property="og:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
+<meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - {{service.name}}">
+<meta name="twitter:description" content="{{config.DESCRIPTION}}">
+<meta name="twitter:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<link rel="canonical" href="https://isterlab.qateeb.com/">
+
+{% endblock meta %}
+
+
 {% block breadcrumbs %}
 {% include "components/breadcrumbs.html" with section='Solutions' %}
 {% endblock breadcrumbs %}

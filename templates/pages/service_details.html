@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block meta %}
+
+<title>{{ config.WEBSITE_NAME }} - {{service.short_description}}</title>
+<meta name="description" content="{{service.short_description}}">
+<meta property="og:title" content="{{ config.WEBSITE_NAME }} - {{service.name}}">
+<meta property="og:description" content="{{service.short_description}}">
+<meta property="og:url" content="https://isterlab.qateeb.com{{request.get_full_path}}">
+<meta property="og:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
+<meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - {{service.name}}">
+<meta name="twitter:description" content="{{service.short_description}}">
+<meta name="twitter:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<link rel="canonical" href="https://isterlab.qateeb.com/">
+
+{% endblock meta %}
+
+
 {% block styles %}
 <style>
     h2,h3{

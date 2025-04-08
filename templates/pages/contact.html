@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
+
+{% block meta %}
+
+<title>{{ config.WEBSITE_NAME }} - Contact us</title>
+<meta name="description" content="{{config.DESCRIPTION}}">
+<meta property="og:title" content="{{ config.WEBSITE_NAME }} - Contact us">
+<meta property="og:description" content="{{config.DESCRIPTION}}">
+<meta property="og:url" content="https://isterlab.qateeb.com{{request.get_full_path}}">
+<meta property="og:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
+<meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - Contact us">
+<meta name="twitter:description" content="We offer expert IT solutions for businesses, including web development, cloud computing, and AI services.">
+<meta name="twitter:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<link rel="canonical" href="https://isterlab.qateeb.com{{request.get_full_path}}">
+
+
+{% endblock meta %}
+
 {% load static %}
 {% block breadcrumbs %}
 {% include "components/breadcrumbs.html" with section=' Contact us' %}

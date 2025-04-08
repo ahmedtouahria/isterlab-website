@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block meta %}
+
+<title>{{ config.WEBSITE_NAME }} - {{solution.short_description}}</title>
+<meta name="description" content="{{solution.short_description}}">
+<meta property="og:title" content="{{ config.WEBSITE_NAME }} - {{service.name}}">
+<meta property="og:description" content="{{solution.short_description}}">
+<meta property="og:url" content="https://isterlab.qateeb.com{{request.get_full_path}}">
+<meta property="og:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<meta property="og:site_name" content="{{ config.WEBSITE_NAME }}">
+<meta name="twitter:title" content="{{ config.WEBSITE_NAME }} - {{solution.name}}">
+<meta name="twitter:description" content="{{solution.short_description}}">
+<meta name="twitter:image" content="https://isterlab.qateeb.com/media/{{config.BANNER}}">
+<link rel="canonical" href="https://isterlab.qateeb.com/">
+
+{% endblock meta %}
+
 {% block breadcrumbs %}
 {% endblock breadcrumbs %}
 {% block styles %}

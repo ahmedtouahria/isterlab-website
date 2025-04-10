@@ -155,3 +155,7 @@ class Blog(models.Model):
         if self.slug is None:
             self.slug = slugify(self.title)
         super(Blog, self).save(*args, **kwargs) # Call the real save() method
+
+    def __str__(self):
+        return self.title
+    

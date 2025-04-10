@@ -187,3 +187,5 @@ CONSTANCE_CONFIG={
     'RECAPTCHA_SECRET_KEY': (config('RECAPTCHA_SECRET_KEY',''), 'ReCAPTCHA Secret Key'),
 
 }
+
+from .unfold.settings import UNFOLD

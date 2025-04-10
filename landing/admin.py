@@ -36,9 +36,14 @@ class BrandAdmin(ModelAdmin):
 class CovergeAdmin(ModelAdmin):
     model = Coverage
 
+    list_display = ['name','longitude','latitude']
 class BlogAdmin(ModelAdmin):
     model = Blog
     list_display = ['title','created_at']
+
+class ContactUSADMIN(ModelAdmin):
+    model = Contact
+    list_display = ['name','email','created_at']
 
 class BecomepartnerAdmin(ModelAdmin):
     model = ContactPartner
@@ -52,3 +57,4 @@ admin.site.register(Brand,BrandAdmin)
 admin.site.register(FAQ)
 admin.site.register(Blog,BlogAdmin)
 admin.site.register(ContactPartner,BecomepartnerAdmin)
+admin.site.register(Contact,ContactUSADMIN)

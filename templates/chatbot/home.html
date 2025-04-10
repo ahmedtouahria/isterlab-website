@@ -68,6 +68,7 @@ function handleOptionClick(type, target, value, displayText) {
     
     // Process after short delay for better UX
     setTimeout(() => {
+
         removeTypingIndicator();
         
         switch (type) {
@@ -79,7 +80,6 @@ function handleOptionClick(type, target, value, displayText) {
                 window.open(value || target, '_blank');
                 navigateBack();
                 break;
-                
             case 'form':
                 showForm(target);
                 break;
@@ -113,6 +113,7 @@ function loadState(stateKey) {
     appendBotResponse(state.message, state.options);
 }
 
+ 
 function showResponse(responseId, responseText) {
     const responseHtml = `
         <div class="tyn-reply-item incoming">

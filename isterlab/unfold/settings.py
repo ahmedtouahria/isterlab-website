@@ -10,7 +10,6 @@ UNFOLD = {
     "SITE_SYMBOL": "speed",  # symbol from icon set
     "SHOW_HISTORY": True, # show/hide "History" button, default: True
     "SHOW_VIEW_ON_SITE": True, # show/hide "View on site" button, default: True
-   # "DASHBOARD_CALLBACK": "qateeb.unfold.views.dashboard_callback",
 
     "SITE_ICON": {
         "light": lambda request: static("assets/images/logo/icon.ico"),  # light mode
@@ -25,7 +24,7 @@ UNFOLD = {
             "href": lambda request: static("app/smartinvoice-fav.png"),
         },
     ],
-  #  "DASHBOARD_CALLBACK": "Smart invoice.unfold.views.dashboard_callback",
+    "DASHBOARD_CALLBACK": "isterlab.unfold.views.dashboard_callback",
     "COLORS": {
     "primary": {
         "50": "240 248 255",  # AliceBlue

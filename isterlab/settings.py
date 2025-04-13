@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "django.contrib.humanize",
+
     "daphne",
 
     'django.contrib.staticfiles',
@@ -170,6 +172,8 @@ CONSTANCE_CONFIG={
     'WEBSITE_NAME': ("Isterlab", 'WEBSITE NAME'),
     'WEBSITE_URL': ("https://isterlab.qateeb.com/", 'WEBSITE URL'),
     'LOGO': ("",'','image_field'),
+    'G4_GOOGLE_ANAYTICS_PROPERTY_ID': ("",'G4_GOOGLE_ANAYTICS_PROPERTY_ID'),
+
     'PRIVACY': ("",'PRIVACY'),
     'BANNER': ("",'BANNER','image_field'),
     'DESCRIPTION': ("Team up with the best collaboration from the right expertises.", 'WEBSITE DESCRIPTION'),

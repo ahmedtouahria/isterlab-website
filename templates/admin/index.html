@@ -1,0 +1,100 @@
+{% extends 'unfold/layouts/base_simple.html' %}
+
+{% load cache humanize i18n %}
+{% load unfold %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('Vulnerability Management Dashboard') }}
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Vulnerability Dashboard') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+{% component "unfold/components/container.html" %}
+
+        {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+
+                {% trans "Last 30 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" label=label %}
+                    {% component "unfold/components/text.html" %}
+                       Visitors
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        <span class="text-blue-500">{{ analytics_data.last_30_days_visitors }}</span>
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                {% trans "Last 30 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" label=label %}
+                    {% component "unfold/components/text.html" %}
+                    Sessions
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        <span class="text-red-500">{{ analytics_data.last_30_days_clicks }}</span>
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                {% trans "Last 30 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" label=label %}
+                    {% component "unfold/components/text.html" %}
+                    Events
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        <span class="text-yellow-500">{{ analytics_data.last_30_days_events }}</span>
+                    {% endcomponent %}
+                {% endcomponent %}
+
+        {% endcomponent %}
+
+        {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+
+                {% trans "Last 30 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" label=label %}
+                    {% component "unfold/components/text.html" %}
+                        Contact us requests
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        <span class="text-green-500">{{ total_contact_last_30_days }}</span>
+                    {% endcomponent %}
+                {% endcomponent %}
+                {% trans "Last 30 days" as label %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3" label=label %}
+                    {% component "unfold/components/text.html" %}
+                        Partner contacts
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" %}
+                        <span class="text-green">{{ total_partner_contacts_last_30_days }}</span>
+                    {% endcomponent %}
+                {% endcomponent %}
+
+        {% endcomponent %}
+
+        {% trans "Invoices Activities in the Last 30 Days" as title %}
+        {% component "unfold/components/card.html" with class="mb-8" title=title %}
+            {% component "unfold/components/chart/bar.html" with data=chart height=320 %}{% endcomponent %}
+        {% endcomponent %}
+
+        {% trans "Completed Payments" as title %}
+        {% component "unfold/components/card.html" with class="mb-8" title=title %}
+            {% component "unfold/components/chart/bar.html" with data=chart_payment height=320 %}{% endcomponent %}
+        {% endcomponent %}
+
+    {% endcomponent %}
+{% endblock %}

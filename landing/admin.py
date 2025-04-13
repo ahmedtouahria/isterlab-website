@@ -50,11 +50,15 @@ class BecomepartnerAdmin(ModelAdmin):
     list_display = ['name','email','company','country','state']
     list_filter = ['country','state']
 
+class FaqAdmin(ModelAdmin):
+    model = FAQ
+    list_display = ['question','response']
+
 admin.site.register(Solution,SolutionsAdmin)
 admin.site.register(Service,ServiceAdmin)
 admin.site.register(Coverage,CovergeAdmin)
 admin.site.register(Brand,BrandAdmin)
-admin.site.register(FAQ)
+admin.site.register(FAQ,FaqAdmin)
 admin.site.register(Blog,BlogAdmin)
 admin.site.register(ContactPartner,BecomepartnerAdmin)
 admin.site.register(Contact,ContactUSADMIN)

@@ -86,12 +86,12 @@
 
         {% endcomponent %}
 
-        {% trans "Invoices Activities in the Last 30 Days" as title %}
+        {% trans "Contacts requests  in the Last 30 Days" as title %}
         {% component "unfold/components/card.html" with class="mb-8" title=title %}
             {% component "unfold/components/chart/bar.html" with data=chart height=320 %}{% endcomponent %}
         {% endcomponent %}
 
-        {% trans "Completed Payments" as title %}
+        {% trans "Partners requests" as title %}
         {% component "unfold/components/card.html" with class="mb-8" title=title %}
             {% component "unfold/components/chart/bar.html" with data=chart_payment height=320 %}{% endcomponent %}
         {% endcomponent %}

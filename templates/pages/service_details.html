@@ -42,13 +42,13 @@
         </div>
     </div>
     <!--===========  feature-large-images-wrapper  Start =============-->
-    <div class="feature-large-images-wrapper section-space--ptb_100">
+    <div class="feature-large-images-wrapper py-4">
         <div class="container">
             <div class="cybersecurity-about-box">
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="modern-number-01">
-                            <h3 class="heading mt-30">Learn More About Our <span class="text-color-primary"> Success <br> Stories</span></h3>
+                            <h3 class="heading mt-30">Learn More About Our  Success  Stories</h3>
                         </div>
                     </div>
                     <div class="col-lg-7 offset-lg-1">
@@ -63,11 +63,11 @@
     </div>
     <!--===========  feature-large-images-wrapper  End =============-->
 
-    <div class="accordion-wrapper section-space--pb_100">
+    <div class="accordion-wrapper ">
         <div class="container">
             <div class="row ">
                 <div class="col-lg-12">
-                    <div class="faq-two-wrapper section-space--mt_40">
+                    <div class="faq-two-wrapper">
                         <div id="accordion_two">
                             {% for item in service.faqs.all %}
                                 <div class="card">
@@ -90,13 +90,15 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12 my-5">
+                <div class="col-lg-12">
                     {{service.content | safe}}
                 </div>
             </div>
+            <hr>
+
+
         </div>
     </div>
-
   {% include "components/key_features.html" %}
 
   {% include "components/call_to_action.html" %}

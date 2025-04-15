@@ -80,8 +80,13 @@ def contact(request):
             # reCAPTCHA failed
             return render(request, 'pages/contact.html', {"error": "reCAPTCHA verification failed. Please try again."})
 
-
-    return render(request, 'pages/contact.html')
+    coverages = list(Coverage.objects.values("name", "latitude", "longitude"))
+    
+    context = {
+        "coverages_json": json.dumps(coverages)  # Convert to JSON for JavaScript
+    }
+    
+    return render(request, 'pages/contact.html',context)
 
 
 def coverages(request):

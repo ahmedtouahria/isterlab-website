@@ -22,6 +22,33 @@
 {% block breadcrumbs %}
 {% include "components/breadcrumbs.html" with section=' Contact us' %}
 {% endblock breadcrumbs %}
+
+{% block styles %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+    #map {
+        width: 100%;
+        height: 500px;
+    }
+    .leaflet-tooltip.country-label {
+        font-size: 12px;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px white;
+        border: none;
+        background: transparent;
+    }
+    
+    /* Hide Israel label from tiles */
+    .leaflet-tile-container img[alt*="Israel"] {
+        visibility: hidden;
+    }
+</style>
+
+{% endblock styles %}
+
 {% block content %}
 
 <div class="site-wrapper-reveal">
@@ -74,6 +101,11 @@
                 </div>
             </div>
         </div>
+        <div class="full-wrap-map container section-space--pt_100" >
+            <div class="google-map"style="" >
+                <div id="map" class="embed-responsive-item googleMap-3" style="border-radius:40px" data-lat="40.730610" data-Long="-73.935242"></div>
+            </div>
+        </div>
     </div>
     <!--====================  Conact us Section End  ====================-->
 
@@ -101,5 +133,71 @@
             document.getElementById("g-recaptcha-response").value = token;
         });
     });
+</script>
+
+<script>
+    var map = L.map('map').setView([20, 0], 3);
+
+    // Use a tile layer without country borders
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+    
+    // Add country labels layer (CartoDB labels only)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+
+    // Create a custom icon
+    var customIcon = L.icon({
+        iconUrl: '{% static "assets/images/map-point.png" %}', // Path to your icon image
+        iconSize: [38, 38], // Size of the icon
+        iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location
+        popupAnchor: [0, -38] // Point from which the popup should open relative to the iconAnchor
+    });
+    
+    // Custom locations (Markers)
+    var locations = {{ coverages_json|safe }};
+    
+    // Add markers for each location with custom icon
+    locations.forEach(function(location) {
+        L.marker([location.latitude, location.longitude], {icon: customIcon})
+            .addTo(map)
+            .bindPopup(`
+                <div style="font-family: 'Arial', sans-serif;">
+                    <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+                        <img src="{% static 'assets/images/logo/icon.ico' %}" 
+                             alt="Logo" 
+                             style="width:40px; height:40px; margin-bottom: 8px;">
+                        <h6 style="margin: 5px 0; color: #333;">${location.name || 'Business Name'}</h6>
+                    </div>
+                    
+                    <div style="font-size: 13px; color: #555;">
+                        <div style="margin-bottom: 8px;">
+                            <strong style="display: inline-block; width: 70px;">Address:</strong>
+                            ${location.address || 'N/A'}
+                        </div>
+                        
+                        <div style="margin-bottom: 8px;">
+                            <strong style="display: inline-block; width: 70px;">Phone:</strong>
+                            <a href="tel:${location.phone || ''}" style="color: #0066cc; text-decoration: none;">
+                                ${location.phone || 'N/A'}
+                            </a>
+                        </div>
+            
+                    </div>
+                    
+                    ${location.description ? `
+                    <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+                        ${location.description}
+                    </div>` : ''}
+                </div>
+            `);
+    });
+    
 </script>
 {% endblock js %}

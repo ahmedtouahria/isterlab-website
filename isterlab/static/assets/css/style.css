@@ -751,7 +751,7 @@ input[type=checkbox] {
   background-size: cover;
   z-index: 3;
   position: relative;
-  background-image: url(../images/bg/title-bar-01-bg.webp);
+  background-image: url(../images/bg/earth.webp);
 }
 @media only screen and (max-width: 767px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (min-width: 992px) and (max-width: 1199px) {
   .breadcrumb-area {

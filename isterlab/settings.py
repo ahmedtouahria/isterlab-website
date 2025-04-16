@@ -173,7 +173,7 @@ CONSTANCE_CONFIG={
     'WEBSITE_URL': ("https://isterlab.qateeb.com/", 'WEBSITE URL'),
     'LOGO': ("",'','image_field'),
     'G4_GOOGLE_ANAYTICS_PROPERTY_ID': ("",'G4_GOOGLE_ANAYTICS_PROPERTY_ID'),
-
+    'COVERAGES_EXECLUDE_COUNTRIES': ("Yemen, Sudan,Cuba,Syria,Israel,Mali",'Exclude from coverages area'),
     'PRIVACY': ("",'PRIVACY'),
     'BANNER': ("",'BANNER','image_field'),
     'DESCRIPTION': ("Team up with the best collaboration from the right expertises.", 'WEBSITE DESCRIPTION'),

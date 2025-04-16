@@ -82,10 +82,7 @@
     });
     
     // Countries to EXCLUDE from coloring
-    var excludedCountries = ["Yemen", "Sudan", "Cuba", "Syria", "Israel","Mali"];
-    
-    // Custom locations (Markers)
-    var locations = {{ coverages_json|safe }};
+    var excludedCountries = "{{config.COVERAGES_EXECLUDE_COUNTRIES}}".split(",");
     
     // Load and colorize countries
     fetch('{% static "assets/countries.geojson" %} ')

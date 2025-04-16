@@ -60,41 +60,63 @@
 <script>
     var map = L.map('map').setView([20, 0], 3);
 
-    // Use a tile layer without country borders
+    // Base map layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
     }).addTo(map);
     
-    // Add country labels layer (CartoDB labels only)
+    // Country labels layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20
     }).addTo(map);
-    // Create a custom icon
+    
+    // Custom marker icon
     var customIcon = L.icon({
-        iconUrl: '{% static "assets/images/point.png" %}', // Path to your icon image
-        iconSize: [38, 38], // Size of the icon
-        iconAnchor: [19, 38], // Point of the icon which will correspond to marker's location
-        popupAnchor: [0, -38] // Point from which the popup should open relative to the iconAnchor
+        iconUrl: '{% static "assets/images/point.png" %}',
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
     });
+    
+    // Countries to EXCLUDE from coloring
+    var excludedCountries = ["Yemen", "Sudan", "Cuba", "Syria", "Israel","Mali"];
     
     // Custom locations (Markers)
     var locations = {{ coverages_json|safe }};
     
-    // Add markers for each location with custom icon
-    locations.forEach(function(location) {
-        L.marker([location.latitude, location.longitude], {icon: customIcon})
-            .addTo(map)
-        {% comment %}     .bindPopup(`
-                <div style="text-align: center;">
-                    <img src="{% static "assets/images/logo/icon.ico" %}" alt="Logo" style="width:50px; height:50px; display:block; margin:0 auto;">
-                    <b>${location.name}</b>
-                </div>
-            `); {% endcomment %}
-    });
+    // Load and colorize countries
+    fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson')
+        .then(response => response.json())
+        .then(data => {
+            L.geoJSON(data, {
+                style: function(feature) {
+                    // Check if country should be excluded
+                    const isExcluded = excludedCountries.includes(feature.properties.NAME);
+                    return {
+                        fillColor: isExcluded ? 'transparent' : '#00a651', // Blue for most countries
+                        weight: isExcluded ? 0.5 : 1,
+                        opacity: 1,
+                        color: isExcluded ? '#cccccc' : '#ffffff', // Light gray for excluded
+                        fillOpacity: isExcluded ? 0 : 0.7, // Transparent for excluded
+                        dashArray: isExcluded ? '3,3' : null // Dashed border for excluded
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    // Show country name on hover
+                    if (!excludedCountries.includes(feature.properties.NAME)) {
+                        layer.bindTooltip(feature.properties.NAME, {
+                            permanent: false,
+                            direction: 'top',
+                            className: 'country-label'
+                        });
+                    }
+                }
+            }).addTo(map);
+        })
+        .catch(err => console.error('Error loading countries:', err));
     
 </script>
 {% endblock js %}

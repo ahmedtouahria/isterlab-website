@@ -91,6 +91,8 @@ class Coverage(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
 
+
+
 class FAQ(models.Model):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     question = models.TextField()

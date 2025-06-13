@@ -1,16 +1,15 @@
 {% load static %}
 <div class="footer-area-wrapper black-bg">
-    <div class="footer-area section-space--ptb_80">
-        <div class="container">
-            <div class="row footer-widget-wrapper border-bottom">
-                <div class="col-lg-4 col-md-6 col-sm-6 footer-widget">
+    <div class="footer-area section-space--ptb_80" style="padding-inline: 50px;">
+            <div class="row footer-widget-wrapper border-bottom" style="justify-content: center;">
+                <div class="col-lg-5 col-md-6 col-sm-6 footer-widget">
                     <h6 class="footer-widget__title mb-20 text-white">Company</h6>
                     <ul class="footer-widget__list">
                         <li class="text-white">Address: {{config.BASE_ADDRESS}}
 
                         </li>
-                        <li><a href="mailto:{{config.EMAIL}}" class="hover-style-link text-white">{{config.EMAIL}}</a></li>
-                        <li><a href="tel:123344556" class="hover-style-link text-white font-weight--bold">{{config.PRIMARY_PHONE}}</a></li>
+                        <li><a href="mailto:{{config.EMAIL}}" class="hover-style-link text-white font-weight--bold">@: {{config.EMAIL}}</a></li>
+                        <li><a href="tel:123344556" class="hover-style-link text-white font-weight--bold">Contact: {{config.PRIMARY_PHONE}}</a></li>
 
                     </ul>
                     <ul class="list ht-social-networks large-icon mt-20">
@@ -56,7 +55,7 @@
                 </div>
     
             </div>
-        </div>
+        
     </div>
     <div class="footer-copyright-area section-space--pb_30 small-mt__30">
         <div class="container">

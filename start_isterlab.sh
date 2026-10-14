@@ -1,4 +1,4 @@
-#!/bin/bash
-cd $(pwd);
-source env/bin/activate;
-python manage.py runserver 0.0.0.0:8020;
+#!/usr/bin/env bash
+set -Eeuo pipefail
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+exec "$ROOT_DIR/scripts/stack.sh" "$@"

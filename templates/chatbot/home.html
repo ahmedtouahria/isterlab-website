@@ -15,10 +15,17 @@
 {% endblock content %}
 
 {% block js %}
+{{ conversation_flow_json|json_script:"conversation-flow" }}
 <script>
 // Global variable to track conversation state
 let currentState = 'init';
 const chatHistory = [];
+
+function escapeHtml(value) {
+    const element = document.createElement('span');
+    element.textContent = String(value ?? '');
+    return element.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 // Initialize chat with proper JSON parsing
 function initializeChat() {
@@ -124,7 +131,7 @@ function showResponse(responseId, responseText) {
             </div>
             <div class="tyn-reply-group">
                 <div class="tyn-reply-bubble">
-                    <div class="tyn-reply-text">${responseText || 'Response not available'}</div>
+                    <div class="tyn-reply-text">${escapeHtml(responseText || 'Response not available')}</div>
                     <button class="btn btn-sm btn-outline-secondary chat-back-btn mt-2">
                         ← Back
                     </button>
@@ -165,7 +172,7 @@ function appendMessage(message, isUser) {
             ${avatarHtml}
             <div class="tyn-reply-group">
                 <div class="tyn-reply-bubble">
-                    <div class="tyn-reply-text">${message}</div>
+                    <div class="tyn-reply-text">${escapeHtml(message)}</div>
                 </div>
             </div>
         </div>
@@ -183,10 +190,10 @@ function appendBotResponse(message, options) {
         
         buttonsHtml += `
             <button class="btn btn-sm ${btnClass} btn-pill option-btn"
-                    data-option-type="${option.type}"
-                    data-option-target="${key}"
-                    data-option-value="${option.url || option.target || ''}">
-                ${option.text}
+                    data-option-type="${escapeHtml(option.type)}"
+                    data-option-target="${escapeHtml(key)}"
+                    data-option-value="${escapeHtml(option.url || option.target || option.response || '')}">
+                ${escapeHtml(option.text)}
             </button>
         `;
     }
@@ -200,7 +207,7 @@ function appendBotResponse(message, options) {
             </div>
             <div class="tyn-reply-group">
                 <div class="tyn-reply-bubble">
-                    <div class="tyn-reply-text">${message}</div>
+                    <div class="tyn-reply-text">${escapeHtml(message)}</div>
                     <div class="tyn-button-group mt-2">${buttonsHtml}</div>
                 </div>
             </div>
@@ -213,7 +220,7 @@ function appendBotResponse(message, options) {
 
 document.addEventListener("DOMContentLoaded", function() {
     // Get conversation flow from Django template context
-    const conversationFlow = {{ conversation_flow_json|safe }}
+    const conversationFlow = JSON.parse(document.getElementById('conversation-flow').textContent);
     
     // Initialize chat with the preloaded flow
     window.conversationFlow = conversationFlow;

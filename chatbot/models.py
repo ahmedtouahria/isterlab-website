@@ -21,7 +21,7 @@ class Response(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,related_name="responses")
     response = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    blogs = models.ManyToManyField(Blog,related_name="blogs",blank=True, null=True)
+    blogs = models.ManyToManyField(Blog, related_name="blogs", blank=True)
     def __str__(self):
         return self.response
     

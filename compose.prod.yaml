@@ -1,0 +1,57 @@
+name: isterlab-prod
+services:
+  web:
+    build: .
+    env_file: ${STACK_ENV_FILE:-.env.prod}
+    environment:
+      DJANGO_DEBUG: "False"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Set DJANGO_SECRET_KEY in .env.prod}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:?Set DJANGO_ALLOWED_HOSTS in .env.prod}
+      REDIS_URL: redis://redis:6379/0
+      DATABASE_PATH: /data/db.sqlite3
+      STATIC_ROOT: /app/static
+      MEDIA_ROOT: /app/media
+      COLLECT_STATIC: "1"
+    volumes:
+      - database:/data
+      - static:/app/static
+      - media:/app/media
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz/', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      retries: 5
+      start_period: 60s
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${WEB_PORT:-8020}:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - static:/app/static:ro
+      - media:/app/media:ro
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, "http://127.0.0.1/healthz/"]
+      interval: 10s
+      timeout: 6s
+      retries: 5
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  database:
+  static:
+  media:

@@ -242,15 +242,15 @@ def build_conversation_flow():
         "options": flow["init"]["options"].copy()
     }
     
-    return json.dumps(flow)
+    return flow
 
 
 def chatbot_view(request):
 
-    conversationflow = cache.get("conversation_flow")
+    conversationflow = cache.get("conversation_flow_v2")
     if not conversationflow :
         conversationflow =build_conversation_flow()
-        cache.set("conversation_flow",conversationflow)
+        cache.set("conversation_flow_v2",conversationflow)
 
     context = { 
         'conversation_flow_json':  conversationflow

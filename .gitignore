@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Local stack configuration and generated static files
+.env.*
+!.env.*.example
+/static/

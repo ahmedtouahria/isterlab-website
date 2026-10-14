@@ -1,9 +1,22 @@
 import json
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 import requests
 from .models import *
 from constance import config
-# Create your views here.
+def verify_recaptcha(token):
+    if not token or not config.RECAPTCHA_SECRET_KEY:
+        return False
+    try:
+        response = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={'secret': config.RECAPTCHA_SECRET_KEY, 'response': token},
+            timeout=10,
+        )
+        response.raise_for_status()
+        return response.json().get('success') is True
+    except (requests.RequestException, ValueError, AttributeError):
+        return False
+
 
 
 def home(request):
@@ -57,16 +70,7 @@ def contact(request):
         recaptcha_response = request.POST.get('g-recaptcha-response')
 
          # Verify reCAPTCHA
-        secret_key = config.RECAPTCHA_SECRET_KEY
-        recaptcha_verify_url = "https://www.google.com/recaptcha/api/siteverify"
-        data = {
-            'secret': secret_key,
-            'response': recaptcha_response
-        }
-        response = requests.post(recaptcha_verify_url, data=data)
-        result = response.json()
-
-        if result.get("success"):
+        if verify_recaptcha(recaptcha_response):
 
             contact_obj,_ = Contact.objects.get_or_create(
                 name = con_name,
@@ -101,13 +105,13 @@ def coverages(request):
 
 def service_details(request,name):
     context = {
-        "service": Service.objects.get(name=name)
+        "service": get_object_or_404(Service, name=name)
     }
     return render(request, 'pages/service_details.html',context)
 
 def solution_details(request,name):
     context = {
-        "solution":Solution.objects.get(name=name)
+        "solution":get_object_or_404(Solution, name=name)
     }
     return render(request, 'pages/solution_details.html',context)
 
@@ -133,16 +137,7 @@ def become_a_partner(request):
         recaptcha_response = request.POST.get('g-recaptcha-response')
 
          # Verify reCAPTCHA
-        secret_key = config.RECAPTCHA_SECRET_KEY
-        recaptcha_verify_url = "https://www.google.com/recaptcha/api/siteverify"
-        data = {
-            'secret': secret_key,
-            'response': recaptcha_response
-        }
-        response = requests.post(recaptcha_verify_url, data=data)
-        result = response.json()
-
-        if result.get("success"):
+        if verify_recaptcha(recaptcha_response):
 
             contact_obj,_ = ContactPartner.objects.get_or_create(
                 name = con_name,
@@ -175,7 +170,7 @@ def blogs(request):
 def blog_details(request,slug):
 
     context = {
-    "blog":Blog.objects.get(slug=slug)
+    "blog":get_object_or_404(Blog, slug=slug)
     }
 
     return render(request, 'pages/blog_details.html',context)

@@ -1,24 +1,28 @@
 
 import os
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise ImproperlyConfigured('DJANGO_SECRET_KEY is required when debug is disabled.')
+    SECRET_KEY = 'django-insecure-local-development-only'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p#ut&qt1+#sygjtvdfn_^#1kr^!846=l0%u_$hq*=i2loppid%'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['isterlab.qateeb.com','127.0.0.1']
-
-
-CSRF_TRUSTED_ORIGINS = [f"http://{host}" for host in ALLOWED_HOSTS] + [f"https://{host}" for host in ALLOWED_HOSTS]
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+CSRF_TRUSTED_ORIGINS = config('DJANGO_CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+SESSION_COOKIE_SECURE = config('DJANGO_SESSION_COOKIE_SECURE', default=not DEBUG, cast=bool)
+CSRF_COOKIE_SECURE = config('DJANGO_CSRF_COOKIE_SECURE', default=not DEBUG, cast=bool)
+SECURE_SSL_REDIRECT = config('DJANGO_SECURE_SSL_REDIRECT', default=False, cast=bool)
+SECURE_HSTS_SECONDS = config('DJANGO_SECURE_HSTS_SECONDS', default=0, cast=int)
+# Enable only behind a trusted proxy that strips client-supplied forwarding headers.
+if config('DJANGO_TRUST_PROXY', default=False, cast=bool):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024  # 25 MB in bytes
 
@@ -49,20 +53,21 @@ INSTALLED_APPS = [
     'chatbot'
 ]
 # Allow embedding in iframes
-X_FRAME_OPTIONS = 'ALLOWALL'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [config("REDIS_URL", default="redis://127.0.0.1:6379/0")],
         },
     },
 }
 
 ASGI_APPLICATION = "isterlab.asgi.application"
 MIDDLEWARE = [
+    'isterlab.health.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.gzip.GZipMiddleware',
@@ -104,7 +109,8 @@ WSGI_APPLICATION = 'isterlab.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': config('DATABASE_PATH', default=str(BASE_DIR / 'db.sqlite3')),
+        'OPTIONS': {'timeout': 20},
     }
 }
 
@@ -144,13 +150,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = config('STATIC_ROOT', default=str(BASE_DIR / 'static'))
 STATICFILES_DIRS = [ 
     os.path.join(BASE_DIR, "isterlab/static"),
 ]
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = config('MEDIA_ROOT', default=str(BASE_DIR / 'media'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
